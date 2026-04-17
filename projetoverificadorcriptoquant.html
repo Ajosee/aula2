@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="author" content="ANTONIO J.B. SILVA">
+    <meta name="description" content="Verificador de Segurança Pessoal na Era Quântica – Calcule seu Índice de Resiliência Quântica (IRQ) e proteja seus dados contra o futuro da computação.">
+    <title>Antonio J.B. Silva | Verificador Quântico</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- ========== CABEÇALHO COM MENU ========== -->
+    <header>
+        <div class="logo">
+            <span class="icon">⚛️</span> 
+            <span class="name">A.J.B. Silva</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#projetos">Projetos</a></li>
+                <li><a href="#verificador">Verificador Quântico</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- ========== SEÇÃO 1: SOBRE MIM ========== -->
+        <section id="sobre" class="section-sobre">
+            <h2>🔐 Sobre mim</h2>
+            <div class="sobre-card">
+                <div class="avatar-container">
+                    <!-- 
+                        ⚠️ COLOQUE SUA FOTO AQUI:
+                        - Salve sua foto na mesma pasta do projeto (ex: minha-foto.jpg)
+                        - Substitua "foto-antonio.jpg" pelo nome do seu arquivo
+                    -->
+                    <img src="foto trabalho.jpg" alt="Antonio J.B. Silva" class="avatar">
+                </div>
+                <div class="sobre-texto">
+                    <h3>ANTONIO J.B. SILVA</h3>
+                    <p><strong>Pesquisador em criptografia pós-quântica | Desenvolvedor para a soberania digital</strong></p>
+                    <p>Com a iminente chegada do primeiro computador quântico brasileiro (2026) e a crescente ameaça do <strong>Q-Day</strong>, criei o primeiro <strong>Verificador de Resiliência Quântica (IRQ)</strong> do país. Minha missão é antecipar vulnerabilidades e capacitar cidadãos com ferramentas práticas, alinhadas à <strong>Estratégia Nacional de Cibersegurança (E-Ciber)</strong> e às normas do <strong>ITI</strong>.</p>
+                    <p>“A segurança digital é um direito. Na era quântica, ela será uma questão de soberania.”</p>
+                    <div class="badge-container">
+                        <span class="badge">🇧🇷 Brasil</span>
+                        <span class="badge">⚛️ Pós-Quântico</span>
+                        <span class="badge">🛡️ E-Ciber</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SEÇÃO 2: MEUS PROJETOS ========== -->
+        <section id="projetos" class="section-projetos">
+            <h2>📡 Meus Projetos Estratégicos</h2>
+            <div id="projetos-container" class="projetos-grid">
+                <!-- Cards serão inseridos via JavaScript -->
+            </div>
+        </section>
+
+        <!-- ========== SEÇÃO 3: VERIFICADOR QUÂNTICO ========== -->
+        <section id="verificador" class="section-verificador">
+            <h2>🧠 Verificador de Resiliência Quântica (IRQ)</h2>
+            <div class="verificador-wrapper">
+                <p class="intro">Responda 5 perguntas rápidas e descubra seu <strong>Índice de Resiliência Quântica</strong>. O resultado mostra o quão preparado você está para o futuro da computação.</p>
+                <form id="quizForm" class="quiz-form">
+                    <div class="pergunta">
+                        <label>1️⃣ Você usa autenticação em dois fatores (2FA) nas principais contas?</label>
+                        <select id="q1" class="styled-select">
+                            <option value="0">❌ Não uso</option>
+                            <option value="1">⚠️ Uso em algumas contas</option>
+                            <option value="2">✅ Uso em todas que oferecem</option>
+                        </select>
+                    </div>
+                    <div class="pergunta">
+                        <label>2️⃣ Suas senhas têm 12+ caracteres com letras, números e símbolos?</label>
+                        <select id="q2" class="styled-select">
+                            <option value="0">❌ Senhas curtas ou repetidas</option>
+                            <option value="1">⚠️ Tenho senhas fortes mas repito</option>
+                            <option value="2">✅ Todas únicas e fortes</option>
+                        </select>
+                    </div>
+                    <div class="pergunta">
+                        <label>3️⃣ Você mantém seus sistemas e aplicativos sempre atualizados?</label>
+                        <select id="q3" class="styled-select">
+                            <option value="0">❌ Raramente ou nunca</option>
+                            <option value="1">⚠️ Às vezes</option>
+                            <option value="2">✅ Atualização automática ativada</option>
+                        </select>
+                    </div>
+                    <div class="pergunta">
+                        <label>4️⃣ Você utiliza um gerenciador de senhas criptografado?</label>
+                        <select id="q4" class="styled-select">
+                            <option value="0">❌ Não utilizo</option>
+                            <option value="1">⚠️ Uso, mas sem criptografia forte</option>
+                            <option value="2">✅ Sim, com criptografia avançada</option>
+                        </select>
+                    </div>
+                    <div class="pergunta">
+                        <label>5️⃣ Você conhece a ameaça da computação quântica e já tomou medidas de proteção?</label>
+                        <select id="q5" class="styled-select">
+                            <option value="0">❌ Não conheço o risco</option>
+                            <option value="1">⚠️ Conheço por alto, mas não agi</option>
+                            <option value="2">✅ Sim, já uso criptografia pós-quântica ou VPN com algoritmos seguros</option>
+                        </select>
+                    </div>
+                    <button type="button" id="calcularBtn" class="btn-calcular">⚡ Calcular meu IRQ</button>
+                </form>
+                <div id="resultado" class="resultado-area"></div>
+                <div id="recomendacoes" class="recomendacoes-area"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ========== RODAPÉ ========== -->
+    <footer>
+        <p>© 2026 – Antonio J.B. Silva | Verificador de Segurança Pessoal – Era Quântica</p>
+        <div class="social-links">
+            <a href="#" target="_blank">GitHub</a>
+            <a href="#" target="_blank">LinkedIn</a>
+            <a href="#" target="_blank">Lattes</a>
+        </div>
+        <p class="small">Alinhado à Estratégia Nacional de Cibersegurança (Decreto 12.573/2025) e às normas do ITI para ICP-Brasil.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
