@@ -1,127 +1,173 @@
-// ========== 1. ARRAY DE PROJETOS (COM LINKS EXTRAS) ==========
-const projetos = [
-  {
-    titulo: "Simulador de Ataque Quântico",
-    descricao: "Ferramenta interativa que demonstra como um computador quântico quebra a criptografia RSA em minutos. Educativa e impactante.",
-    tecnologias: ["JavaScript", "WebAssembly", "Qiskit"],
-    imagem: "https://placehold.co/600x400/0a1c2a/4caf50?text=Simulador+Quântico",
-    link: "https://github.com/antoniojbsilva/simulador-quantico",
-    linksExtras: [
-      {
-        nome: "🔗 Centro Internacional de Computação Quântica (CIQuanta)",
-        url: "https://www.gov.br/mcti/pt-br/acompanhe-o-mcti/noticias/2026/04/centro-internacional-de-computacao-quantica-no-brasil-sera-um-polo-de-inovacao-e-capacitacao"
-      }
-    ]
-  },
-  {
-    titulo: "Guia de Migração Pós-Quântica – ITI",
-    descricao: "Documento interativo com cronograma e algoritmos recomendados pelo Instituto Nacional de Tecnologia da Informação.",
-    tecnologias: ["HTML", "CSS", "Markdown", "LGPD"],
-    imagem: "https://placehold.co/600x400/0a1c2a/4caf50?text=Guia+ITI",
-    link: "https://github.com/antoniojbsilva/guia-iti-posquantico",
-    linksExtras: [
-      {
-        nome: "📄 Instrução Normativa ITI nº 35/2026 (DOU)",
-        url: "https://www.in.gov.br/web/dou/-/instrucao-normativa-iti-n-35-de-30-de-janeiro-de-2026-684841143"
-      },
-      {
-        nome: "🔗 ITI publica incorporação de algoritmos pós-quânticos",
-        url: "https://www.gov.br/iti/pt-br/assuntos/noticias/indice-de-noticias/iti-publica-instrucao-normativa-que-incorpora-algoritmos-pos-quanticos-a-icp-brasil"
-      }
-    ]
-  },
-  {
-    titulo: "Monitor da Estratégia E-Ciber",
-    descricao: "Dashboard que acompanha em tempo real os indicadores da Estratégia Nacional de Cibersegurança (Decreto 12.573/2025).",
-    tecnologias: ["React", "D3.js", "API Gov"],
-    imagem: "https://placehold.co/600x400/0a1c2a/4caf50?text=E-Ciber+Monitor",
-    link: "https://github.com/antoniojbsilva/monitor-eciber",
-    linksExtras: [
-      {
-        nome: "⚖️ Decreto nº 12.573/2025 (E-Ciber)",
-        url: "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2025/decreto/D12573.htm"
-      },
-      {
-        nome: "📚 Legislação Federal em Segurança da Informação",
-        url: "https://www.gov.br/governodigital/pt-br/privacidade-e-seguranca/legislacao-federal"
-      }
-    ]
-  }
+// ========== CONTADORES LOCAIS (sem servidor) ==========
+let visitas = localStorage.getItem('visitas_irq');
+if (visitas === null) visitas = 0;
+visitas = Number(visitas) + 1;
+localStorage.setItem('visitas_irq', visitas);
+document.getElementById('contadorVisitantes').innerText = `Visitantes: ${visitas}`;
+
+let testesIniciados = localStorage.getItem('testes_iniciados_irq');
+if (testesIniciados === null) testesIniciados = 0;
+document.getElementById('contadorTestes').innerText = `Testes iniciados: ${testesIniciados}`;
+
+function incrementarTestes() {
+    let atual = localStorage.getItem('testes_iniciados_irq');
+    atual = atual ? Number(atual) + 1 : 1;
+    localStorage.setItem('testes_iniciados_irq', atual);
+    document.getElementById('contadorTestes').innerText = `Testes iniciados: ${atual}`;
+}
+
+// ========== PERGUNTAS (5 originais + 2 novas) ==========
+const perguntas = [
+    { texto: "Você usa autenticação em dois fatores (2FA) nas principais contas?", opcaoNao: "❌ Não uso" },
+    { texto: "Suas senhas têm 12+ caracteres com letras, números e símbolos?", opcaoNao: "❌ Senhas curtas ou repetidas" },
+    { texto: "Você mantém seus sistemas e aplicativos sempre atualizados?", opcaoNao: "❌ Raramente ou nunca" },
+    { texto: "Você utiliza um gerenciador de senhas criptografado?", opcaoNao: "❌ Não utilizo" },
+    { texto: "Você conhece a ameaça da computação quântica e já tomou medidas de proteção?", opcaoNao: "❌ Não conheço o risco" },
+    { texto: "Você utiliza criptografia de ponta a ponta em aplicações sensíveis (e-mail, mensagens)?", opcaoNao: "❌ Não uso" },
+    { texto: "Você já ouviu falar sobre algoritmos pós-quânticos (CRYSTALS-Kyber) e acompanha as recomendações do NIST/ITI?", opcaoNao: "❌ Não conheço" }
 ];
+let respostas = new Array(7).fill(null);
+let emailUsuario = "";
 
-// Função para gerar os links extras (se houver)
-function renderizarLinksExtras(links) {
-  if (!links || links.length === 0) return '';
-  let html = '<div class="links-extras" style="margin-top: 1rem; border-top: 1px dashed #ccc; padding-top: 0.8rem;">';
-  links.forEach(link => {
-    html += `<p style="margin: 0.3rem 0;"><a href="${link.url}" target="_blank" rel="noopener noreferrer" style="font-size: 0.8rem; color: #0a2b3e; text-decoration: none; border-bottom: 1px dotted #4caf50;">${link.nome}</a></p>`;
-  });
-  html += '</div>';
-  return html;
+function renderizarPerguntas() {
+    const container = document.getElementById("perguntasContainer");
+    container.innerHTML = "";
+    perguntas.forEach((p, idx) => {
+        const div = document.createElement("div");
+        div.classList.add("pergunta");
+        div.innerHTML = `
+            <p>${idx+1}️⃣ ${p.texto}</p>
+            <div class="opcoes">
+                <label><input type="radio" name="q${idx}" value="nao"> ${p.opcaoNao}</label>
+                <label><input type="radio" name="q${idx}" value="sim"> ○ Sim</label>
+            </div>
+        `;
+        if (respostas[idx] !== null) {
+            const val = respostas[idx] ? "sim" : "nao";
+            const radio = div.querySelector(`input[value="${val}"]`);
+            if (radio) radio.checked = true;
+        }
+        const radios = div.querySelectorAll('input[type="radio"]');
+        radios.forEach(radio => {
+            radio.addEventListener("change", () => {
+                respostas[idx] = (radio.value === "sim");
+                atualizarProgresso();
+            });
+        });
+        container.appendChild(div);
+    });
+    atualizarProgresso();
 }
 
-function renderizarProjetos() {
-  const container = document.getElementById("projetos-container");
-  if (!container) return;
-  container.innerHTML = "";
-
-  projetos.forEach(proj => {
-    const card = document.createElement("article");
-    card.classList.add("card-projeto");
-    card.innerHTML = `
-      <img src="${proj.imagem}" alt="${proj.titulo}" loading="lazy">
-      <div class="card-conteudo">
-        <h3>${proj.titulo}</h3>
-        <p>${proj.descricao}</p>
-        <div class="tecnologias">
-          ${proj.tecnologias.map(tech => `<span class="tec-badge">${tech}</span>`).join('')}
-        </div>
-        <a href="${proj.link}" class="btn-projeto" target="_blank" rel="noopener">🔗 Ver no GitHub</a>
-        ${renderizarLinksExtras(proj.linksExtras)}
-      </div>
-    `;
-    container.appendChild(card);
-  });
+function atualizarProgresso() {
+    const respondidas = respostas.filter(r => r !== null).length;
+    document.getElementById("respondidas").innerText = respondidas;
+    const percent = (respondidas / 7) * 100;
+    document.getElementById("barra").style.width = percent + "%";
 }
 
-// ========== 2. VERIFICADOR DE RESILIÊNCIA QUÂNTICA (IRQ) ==========
-function calcularIRQ() {
-  const q1 = parseInt(document.getElementById("q1").value);
-  const q2 = parseInt(document.getElementById("q2").value);
-  const q3 = parseInt(document.getElementById("q3").value);
-  const q4 = parseInt(document.getElementById("q4").value);
-  const q5 = parseInt(document.getElementById("q5").value);
-  
-  const pontuacao = q1 + q2 + q3 + q4 + q5;
-  const pontuacaoMaxima = 10;
-  const percentual = (pontuacao / pontuacaoMaxima) * 100;
-  
-  let nivel = "", cor = "", recomendacao = "";
-  
-  if (percentual >= 80) {
-    nivel = "🟢 Alta Resiliência Quântica";
-    cor = "#1b5e20";
-    recomendacao = "Parabéns! Você está entre os 20% mais preparados. Continue acompanhando as atualizações do ITI sobre criptografia pós-quântica e compartilhe conhecimento.";
-  } else if (percentual >= 50) {
-    nivel = "🟠 Resiliência Moderada – vulnerável a médio prazo";
-    cor = "#e65100";
-    recomendacao = "Você tem boas práticas, mas precisa evoluir: ative 2FA em todas as contas, use um gerenciador de senhas forte e estude o guia de migração pós-quântica do ITI.";
-  } else {
-    nivel = "🔴 Baixa Resiliência – risco elevado no Q-Day";
-    cor = "#b71c1c";
-    recomendacao = "Ações urgentes: troque senhas fracas imediatamente, ative 2FA em todas as contas, mantenha tudo atualizado e inicie seu aprendizado sobre criptografia pós-quântica (veja meu Guia ITI).";
-  }
-  
-  const resultadoDiv = document.getElementById("resultado");
-  const recomendacoesDiv = document.getElementById("recomendacoes");
-  
-  resultadoDiv.innerHTML = `<div style="background: ${cor}20; border-radius: 1.5rem; padding: 1rem; color: ${cor}; font-weight: bold; font-size: 1.2rem;">🧠 Índice IRQ: ${Math.round(percentual)}% – ${nivel}</div>`;
-  recomendacoesDiv.innerHTML = `<strong>📌 Roteiro personalizado para você:</strong><br>${recomendacao}`;
+function calcularResultado() {
+    if (respostas.some(r => r === null)) {
+        alert("Responda todas as 7 perguntas antes de calcular.");
+        return null;
+    }
+    const score = respostas.filter(r => r === true).length;
+    let frase = "";
+    if (score <= 2) frase = "📘 Educativa: Você ainda está no início da jornada quântica. Comece ativando o 2FA e conhecendo os riscos.";
+    else if (score <= 4) frase = "🚀 Motivadora: Bom caminho! Com pequenos ajustes, sua resiliência quântica vai disparar.";
+    else if (score <= 6) frase = "🧠 Inteligente: Você está acima da média. Continue acompanhando as normas do ITI.";
+    else frase = "🏆 Técnica: Excelente! Você domina as práticas atuais e já pensa no futuro pós-quântico. Quem age agora protege o amanhã.";
+    return { score, frase };
 }
 
-// ========== 3. INICIALIZAÇÃO ==========
-document.addEventListener("DOMContentLoaded", () => {
-  renderizarProjetos();
-  const btn = document.getElementById("calcularBtn");
-  if (btn) btn.addEventListener("click", calcularIRQ);
+function enviarEmailSimulado(score, frase) {
+    if (!emailUsuario) {
+        alert("E-mail não informado.");
+        return;
+    }
+    localStorage.setItem('ultimo_email_irq', emailUsuario);
+    alert(`✅ (Simulação) Resultado enviado para ${emailUsuario}\n\nSeu IRQ: ${score}/7\n${frase}\n\n(O envio real será ativado quando você configurar o EmailJS.)`);
+}
+
+// Eventos
+document.getElementById("btnIniciar").addEventListener("click", () => {
+    const email = document.getElementById("userEmail").value.trim();
+    const consent = document.getElementById("lgpdConsent").checked;
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!regex.test(email) || !consent) {
+        document.getElementById("erroEmail").style.display = "block";
+        return;
+    }
+    document.getElementById("erroEmail").style.display = "none";
+    emailUsuario = email;
+    localStorage.setItem('email_usuario_irq', emailUsuario);
+    incrementarTestes();
+
+    document.getElementById("emailSection").style.display = "none";
+    document.getElementById("perguntasArea").style.display = "block";
+    renderizarPerguntas();
 });
+
+document.getElementById("btnCalcular").addEventListener("click", () => {
+    const res = calcularResultado();
+    if (res) {
+        document.getElementById("resultadoArea").style.display = "block";
+        document.getElementById("irqScore").innerHTML = `Seu IRQ: ${res.score}/7`;
+        document.getElementById("fraseResultado").innerHTML = res.frase;
+        window.ultimoScore = res.score;
+        window.ultimaFrase = res.frase;
+    }
+});
+
+document.getElementById("btnEnviarEmail").addEventListener("click", () => {
+    if (window.ultimoScore !== undefined) {
+        enviarEmailSimulado(window.ultimoScore, window.ultimaFrase);
+    } else {
+        alert("Calcule o IRQ primeiro.");
+    }
+});
+
+document.getElementById("btnCopiar").addEventListener("click", () => {
+    if (window.ultimoScore !== undefined) {
+        const texto = `Meu IRQ: ${window.ultimoScore}/7\n${window.ultimaFrase}`;
+        navigator.clipboard.writeText(texto);
+        alert("Resultado copiado!");
+    } else alert("Nenhum resultado para copiar.");
+});
+
+document.getElementById("btnWhatsapp").addEventListener("click", () => {
+    if (window.ultimoScore !== undefined) {
+        const texto = `Meu IRQ: ${window.ultimoScore}/7 - ${window.ultimaFrase}`;
+        const url = `https://wa.me/?text=${encodeURIComponent(texto)}`;
+        window.open(url, "_blank");
+    } else alert("Calcule o IRQ primeiro.");
+});
+
+document.getElementById("voltarTopo").addEventListener("click", (e) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+let dark = false;
+document.getElementById("darkModeBtn").addEventListener("click", () => {
+    dark = !dark;
+    if (dark) document.body.classList.add("dark");
+    else document.body.classList.remove("dark");
+});
+
+let high = false;
+document.getElementById("highContrastBtn").addEventListener("click", () => {
+    high = !high;
+    if (high) document.body.classList.add("high-contrast");
+    else document.body.classList.remove("high-contrast");
+});
+
+let fontSize = 100;
+document.getElementById("increaseFont").addEventListener("click", () => {
+    if (fontSize < 150) fontSize += 10;
+    document.body.style.fontSize = fontSize + "%";
+});
+document.getElementById("decreaseFont").addEventListener("click", () => {
+    if (fontSize > 70) fontSize -= 10;
+    document.body.style.fontSize = fontSize + "%";
+});});

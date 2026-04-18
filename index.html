@@ -3,128 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <meta name="author" content="ANTONIO J.B. SILVA">
-    <meta name="description" content="Verificador de Segurança Pessoal na Era Quântica – Calcule seu Índice de Resiliência Quântica (IRQ) e proteja seus dados contra o futuro da computação.">
-    <title>Antonio J.B. Silva | Verificador Quântico</title>
+    <title>Antonio J.B. Silva | Criptografia Pós-Quântica</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- ========== CABEÇALHO COM MENU ========== -->
-    <header>
-        <div class="logo">
-            <span class="icon">⚛️</span> 
-            <span class="name">A.J.B. Silva</span>
+
+<header>
+    <div class="logo"><span>⚛️</span> A.J.B. Silva</div>
+    <nav>
+        <ul>
+            <li><a href="#sobre">Sobre</a></li>
+            <li><a href="#projetos">Projetos</a></li>
+            <li><a href="#verificador">Verificador Quântico</a></li>
+        </ul>
+    </nav>
+    <div class="acess-buttons">
+        <button id="darkModeBtn" aria-label="Modo escuro">🌓</button>
+        <button id="highContrastBtn" aria-label="Alto contraste">🔊</button>
+        <button id="increaseFont" aria-label="Aumentar fonte">A+</button>
+        <button id="decreaseFont" aria-label="Diminuir fonte">A-</button>
+    </div>
+</header>
+
+<main>
+    <section id="sobre">
+        <h2>🔐 Sobre mim</h2>
+        <div class="sobre-container">
+            <img src="foto_trabalho.jpg" alt="Antonio J.B. Silva" class="foto-perfil" onerror="this.src='https://via.placeholder.com/120?text=Foto'">
+            <h3>ANTONIO J.B. SILVA</h3>
+            <p><strong>Pesquisador em criptografia pós-quântica | Desenvolvedor para a soberania digital</strong></p>
+            <p>Com a iminente chegada do primeiro computador quântico brasileiro (2026) e a crescente ameaça do Q-Day, criei o primeiro Verificador de Resiliência Quântica (IRQ) do país. Minha missão é antecipar vulnerabilidades e capacitar cidadãos com ferramentas práticas, alinhadas à Estratégia Nacional de Cibersegurança (E-Ciber) e às normas do ITI.</p>
+            <div class="frase-autor">
+                “A segurança digital é um direito. Na era quântica, ela será uma questão de soberania.”
+                <div class="autor-nome">(Autor desconhecido)</div>
+            </div>
+            <div class="bandeiras">
+                <img src="bandeira_brasil.jpg" alt="Bandeira do Brasil" class="bandeira" onerror="this.src='https://via.placeholder.com/60?text=Brasil'">
+                <img src="bandeira_piaui.jpg" alt="Bandeira do Piauí" class="bandeira" onerror="this.src='https://via.placeholder.com/60?text=Piauí'">
+            </div>
+            <div class="badges">
+                <span class="badge">🇧🇷 Brasil</span>
+                <span class="badge">⚛️ Pós-Quântico</span>
+                <span class="badge">🛡️ E-Ciber</span>
+            </div>
         </div>
-        <nav>
-            <ul>
-                <li><a href="#sobre">Sobre</a></li>
-                <li><a href="#projetos">Projetos</a></li>
-                <li><a href="#verificador">Verificador Quântico</a></li>
-            </ul>
-        </nav>
-    </header>
+    </section>
 
-    <main>
-        <!-- ========== SEÇÃO 1: SOBRE MIM ========== -->
-        <section id="sobre" class="section-sobre">
-            <h2>🔐 Sobre mim</h2>
-            <div class="sobre-card">
-                <div class="avatar-container">
-                    <!-- 
-                        ⚠️ COLOQUE SUA FOTO AQUI:
-                        - Salve sua foto na mesma pasta do projeto (ex: minha-foto.jpg)
-                        - Substitua "foto-antonio.jpg" pelo nome do seu arquivo
-                    -->
-                    <img src="foto trabalho.jpg" alt="Antonio J.B. Silva" class="avatar">
-                </div>
-                <div class="sobre-texto">
-                    <h3>ANTONIO J.B. SILVA</h3>
-                    <p><strong>Pesquisador em criptografia pós-quântica | Desenvolvedor para a soberania digital</strong></p>
-                    <p>Com a iminente chegada do primeiro computador quântico brasileiro (2026) e a crescente ameaça do <strong>Q-Day</strong>, criei o primeiro <strong>Verificador de Resiliência Quântica (IRQ)</strong> do país. Minha missão é antecipar vulnerabilidades e capacitar cidadãos com ferramentas práticas, alinhadas à <strong>Estratégia Nacional de Cibersegurança (E-Ciber)</strong> e às normas do <strong>ITI</strong>.</p>
-                    <p>“A segurança digital é um direito. Na era quântica, ela será uma questão de soberania.”</p>
-                    <div class="badge-container">
-                        <span class="badge">🇧🇷 Brasil</span>
-                        <span class="badge">⚛️ Pós-Quântico</span>
-                        <span class="badge">🛡️ E-Ciber</span>
-                    </div>
+    <section id="projetos">
+        <h2>📡 Meus Projetos Estratégicos</h2>
+        <div class="projetos-grid">
+            <div class="card-projeto">
+                <img src="https://via.placeholder.com/300x160?text=Simulador+Quântico" alt="Simulador">
+                <div class="card-conteudo">
+                    <h3>Simulador de Ataque Quântico</h3>
+                    <p>Ferramenta interativa que demonstra como um computador quântico quebra a criptografia RSA em minutos.</p>
+                    <div class="tecnologias"><span class="tec-badge">JavaScript</span><span class="tec-badge">WebAssembly</span><span class="tec-badge">Qiskit</span></div>
+                    <a href="#" class="btn-projeto">🔗 Ver no GitHub</a>
                 </div>
             </div>
-        </section>
-
-        <!-- ========== SEÇÃO 2: MEUS PROJETOS ========== -->
-        <section id="projetos" class="section-projetos">
-            <h2>📡 Meus Projetos Estratégicos</h2>
-            <div id="projetos-container" class="projetos-grid">
-                <!-- Cards serão inseridos via JavaScript -->
+            <div class="card-projeto">
+                <img src="https://via.placeholder.com/300x160?text=Guia+ITI" alt="Guia">
+                <div class="card-conteudo">
+                    <h3>Guia de Migração Pós-Quântica – ITI</h3>
+                    <p>Documento interativo com cronograma e algoritmos recomendados pelo ITI.</p>
+                    <div class="tecnologias"><span class="tec-badge">HTML</span><span class="tec-badge">CSS</span><span class="tec-badge">Markdown</span><span class="tec-badge">LGPD</span></div>
+                    <a href="#" class="btn-projeto">🔗 Ver no GitHub</a>
+                </div>
             </div>
-        </section>
-
-        <!-- ========== SEÇÃO 3: VERIFICADOR QUÂNTICO ========== -->
-        <section id="verificador" class="section-verificador">
-            <h2>🧠 Verificador de Resiliência Quântica (IRQ)</h2>
-            <div class="verificador-wrapper">
-                <p class="intro">Responda 5 perguntas rápidas e descubra seu <strong>Índice de Resiliência Quântica</strong>. O resultado mostra o quão preparado você está para o futuro da computação.</p>
-                <form id="quizForm" class="quiz-form">
-                    <div class="pergunta">
-                        <label>1️⃣ Você usa autenticação em dois fatores (2FA) nas principais contas?</label>
-                        <select id="q1" class="styled-select">
-                            <option value="0">❌ Não uso</option>
-                            <option value="1">⚠️ Uso em algumas contas</option>
-                            <option value="2">✅ Uso em todas que oferecem</option>
-                        </select>
-                    </div>
-                    <div class="pergunta">
-                        <label>2️⃣ Suas senhas têm 12+ caracteres com letras, números e símbolos?</label>
-                        <select id="q2" class="styled-select">
-                            <option value="0">❌ Senhas curtas ou repetidas</option>
-                            <option value="1">⚠️ Tenho senhas fortes mas repito</option>
-                            <option value="2">✅ Todas únicas e fortes</option>
-                        </select>
-                    </div>
-                    <div class="pergunta">
-                        <label>3️⃣ Você mantém seus sistemas e aplicativos sempre atualizados?</label>
-                        <select id="q3" class="styled-select">
-                            <option value="0">❌ Raramente ou nunca</option>
-                            <option value="1">⚠️ Às vezes</option>
-                            <option value="2">✅ Atualização automática ativada</option>
-                        </select>
-                    </div>
-                    <div class="pergunta">
-                        <label>4️⃣ Você utiliza um gerenciador de senhas criptografado?</label>
-                        <select id="q4" class="styled-select">
-                            <option value="0">❌ Não utilizo</option>
-                            <option value="1">⚠️ Uso, mas sem criptografia forte</option>
-                            <option value="2">✅ Sim, com criptografia avançada</option>
-                        </select>
-                    </div>
-                    <div class="pergunta">
-                        <label>5️⃣ Você conhece a ameaça da computação quântica e já tomou medidas de proteção?</label>
-                        <select id="q5" class="styled-select">
-                            <option value="0">❌ Não conheço o risco</option>
-                            <option value="1">⚠️ Conheço por alto, mas não agi</option>
-                            <option value="2">✅ Sim, já uso criptografia pós-quântica ou VPN com algoritmos seguros</option>
-                        </select>
-                    </div>
-                    <button type="button" id="calcularBtn" class="btn-calcular">⚡ Calcular meu IRQ</button>
-                </form>
-                <div id="resultado" class="resultado-area"></div>
-                <div id="recomendacoes" class="recomendacoes-area"></div>
+            <div class="card-projeto">
+                <img src="https://via.placeholder.com/300x160?text=Monitor+E-Ciber" alt="Monitor">
+                <div class="card-conteudo">
+                    <h3>Monitor da Estratégia E-Ciber</h3>
+                    <p>Dashboard com indicadores da Estratégia Nacional de Cibersegurança.</p>
+                    <div class="tecnologias"><span class="tec-badge">React</span><span class="tec-badge">D3.js</span><span class="tec-badge">API Gov</span></div>
+                    <a href="#" class="btn-projeto">🔗 Ver no GitHub</a>
+                </div>
             </div>
-        </section>
-    </main>
-
-    <!-- ========== RODAPÉ ========== -->
-    <footer>
-        <p>© 2026 – Antonio J.B. Silva | Verificador de Segurança Pessoal – Era Quântica</p>
-        <div class="social-links">
-            <a href="#" target="_blank">GitHub</a>
-            <a href="#" target="_blank">LinkedIn</a>
-            <a href="#" target="_blank">Lattes</a>
         </div>
-        <p class="small">Alinhado à Estratégia Nacional de Cibersegurança (Decreto 12.573/2025) e às normas do ITI para ICP-Brasil.</p>
-    </footer>
+    </section>
 
-    <script src="script.js"></script>
+    <section id="verificador">
+        <h2>🧠 Verificador de Resiliência Quântica (IRQ)</h2>
+        <div class="quiz-container">
+            <p>Responda <strong>7 perguntas</strong> rápidas e descubra seu Índice de Resiliência Quântica.</p>
+
+            <div id="emailSection" class="email-section">
+                <label>✉️ Seu e-mail (obrigatório):</label>
+                <input type="email" id="userEmail" placeholder="seuemail@exemplo.com">
+                <label style="display: flex; align-items: center; gap: 0.5rem; margin: 0.5rem 0;">
+                    <input type="checkbox" id="lgpdConsent"> 🔒 Li e concordo em fornecer meu e-mail (LGPD)
+                </label>
+                <div id="erroEmail" style="color:red; font-size:0.8rem; display:none;">E-mail inválido ou consentimento não marcado.</div>
+                <button id="btnIniciar" class="btn-iniciar">▶️ Começar teste</button>
+            </div>
+
+            <div id="perguntasArea" style="display:none;">
+                <div class="progresso">📊 Progresso: <span id="respondidas">0</span>/7</div>
+                <div class="barra-progresso"><div id="barra" class="barra-preenchida"></div></div>
+                <div id="perguntasContainer"></div>
+                <button id="btnCalcular" class="btn-calcular">⚡ Calcular meu IRQ</button>
+            </div>
+
+            <div id="resultadoArea" class="resultado-area" style="display:none;">
+                <div class="irq-score" id="irqScore"></div>
+                <div id="fraseResultado"></div>
+                <div style="margin-top: 1rem;">
+                    <button id="btnEnviarEmail" class="btn-enviar">📧 Enviar resultado</button>
+                    <button id="btnCopiar" class="btn-copiar">📋 Copiar resultado</button>
+                    <button id="btnWhatsapp" class="btn-compartilhar">📱 Compartilhar</button>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>© 2026 – Antonio J.B. Silva | Verificador de Segurança Pessoal – Era Quântica</p>
+    <div class="footer-links">
+        <a href="#">🔗 GitHub</a> | <a href="#">💼 LinkedIn</a> | <a href="#">📄 Lattes</a> | <a href="#">✉️ antonio@ajbsilva.tec.br</a>
+    </div>
+    <div class="credito-frase">
+        🛡️ Alinhado à Estratégia Nacional de Cibersegurança (Decreto 12.573/2025)<br>
+        📜 Conforme normas do ITI para ICP-Brasil | 🔒 LGPD<br>
+        ♿ Acessibilidade: WCAG 2.1 AA<br>
+        📊 <span id="contadorVisitantes">Carregando...</span> | 🧪 <span id="contadorTestes">Carregando...</span>
+    </div>
+    <a href="#" class="voltar-topo" id="voltarTopo">↥ Voltar ao topo</a>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
