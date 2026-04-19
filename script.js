@@ -72,12 +72,14 @@ function calcularResultado() {
         return null;
     }
     const score = respostas.filter(r => r === true).length;
+    const percentual = Math.round((score / 7) * 100);
     let frase = "";
     if (score <= 2) frase = "📘 Educativa: Você ainda está no início da jornada quântica. Comece ativando o 2FA e conhecendo os riscos.";
     else if (score <= 4) frase = "🚀 Motivadora: Bom caminho! Com pequenos ajustes, sua resiliência quântica vai disparar.";
     else if (score <= 6) frase = "🧠 Inteligente: Você está acima da média. Continue acompanhando as normas do ITI.";
     else frase = "🏆 Técnica: Excelente! Você domina as práticas atuais e já pensa no futuro pós-quântico. Quem age agora protege o amanhã.";
-    return { score, frase };
+    return { score, percentual, frase };
+}
 }
 
 function enviarEmailSimulado(score, frase) {
@@ -112,7 +114,7 @@ document.getElementById("btnCalcular").addEventListener("click", () => {
     const res = calcularResultado();
     if (res) {
         document.getElementById("resultadoArea").style.display = "block";
-        document.getElementById("irqScore").innerHTML = `Seu IRQ: ${res.score}/7`;
+        document.getElementById("irqScore").innerHTML = `Seu IRQ: ${res.score}/7 (${res.percentual}%)`;
         document.getElementById("fraseResultado").innerHTML = res.frase;
         window.ultimoScore = res.score;
         window.ultimaFrase = res.frase;
