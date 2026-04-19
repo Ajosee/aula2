@@ -73,7 +73,6 @@ function calcularResultado() {
     }
     const score = respostas.filter(r => r === true).length;
     const percentual = Math.round((score / 7) * 100);
-    const percentual = Math.round((score / 7) * 100);
     let frase = "";
     if (score <= 2) frase = "📘 Educativa: Você ainda está no início da jornada quântica. Comece ativando o 2FA e conhecendo os riscos.";
     else if (score <= 4) frase = "🚀 Motivadora: Bom caminho! Com pequenos ajustes, sua resiliência quântica vai disparar.";
