@@ -1,4 +1,4 @@
-// ========== CONTADORES LOCAIS (sem servidor) ==========
+// ========== CONTADORES LOCAIS ==========
 let visitas = localStorage.getItem('visitas_irq');
 if (visitas === null) visitas = 0;
 visitas = Number(visitas) + 1;
@@ -16,7 +16,7 @@ function incrementarTestes() {
     document.getElementById('contadorTestes').innerText = `Testes iniciados: ${atual}`;
 }
 
-// ========== PERGUNTAS (5 originais + 2 novas) ==========
+// ========== PERGUNTAS ==========
 const perguntas = [
     { texto: "Você usa autenticação em dois fatores (2FA) nas principais contas?", opcaoNao: "❌ Não uso" },
     { texto: "Suas senhas têm 12+ caracteres com letras, números e símbolos?", opcaoNao: "❌ Senhas curtas ou repetidas" },
@@ -170,4 +170,4 @@ document.getElementById("increaseFont").addEventListener("click", () => {
 document.getElementById("decreaseFont").addEventListener("click", () => {
     if (fontSize > 70) fontSize -= 10;
     document.body.style.fontSize = fontSize + "%";
-});});
+});
