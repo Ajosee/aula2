@@ -80,7 +80,6 @@ function calcularResultado() {
     else frase = "🏆 Técnica: Excelente! Você domina as práticas atuais e já pensa no futuro pós-quântico. Quem age agora protege o amanhã.";
     return { score, percentual, frase };
 }
-}
 
 function enviarEmailSimulado(score, frase) {
     if (!emailUsuario) {
@@ -173,7 +172,3 @@ document.getElementById("decreaseFont").addEventListener("click", () => {
     if (fontSize > 70) fontSize -= 10;
     document.body.style.fontSize = fontSize + "%";
 });
-^x
-^X
-exit
-
