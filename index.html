@@ -7,6 +7,12 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0a2b3e">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0a2b3e">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0a2b3e">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
@@ -188,6 +194,17 @@
     <a href="#" class="voltar-topo" id="voltarTopo">↥ Voltar ao topo</a>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="script.js"></script>
+    <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("/aula2/sw.js").then(reg => {
+                console.log("Service Worker registrado", reg);
+            }).catch(err => {
+                console.error("Falha ao registrar SW", err);
+            });
+        }
+    </script>
 </body>
 </html>
