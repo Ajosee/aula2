@@ -154,87 +154,13 @@ document.getElementById("btnPDF").addEventListener("click", () => {
     gerarPDF();
 });
 
-document.getElementById("btnWhatsapp").addEventListener("click", () => {
+document.getElementById("btnWhatsapp").addEventListener("click", function() {
+    alert("Botão WhatsApp clicado!"); // Teste
     if (window.ultimoScore !== undefined) {
         const texto = `Meu IRQ: ${window.ultimoScore}/7 - ${window.ultimaFrase}`;
         const url = `https://wa.me/?text=${encodeURIComponent(texto)}`;
-        window.location.href = url;
-    } else alert("Calcule o IRQ primeiro.");
-});
-
-document.getElementById("voltarTopo").addEventListener("click", (e) => {
-    e.preventDefault();
-    window.scrollTo({ top: 0, behavior: "smooth" });
-});
-
-let dark = false;
-document.getElementById("darkModeBtn").addEventListener("click", () => {
-    dark = !dark;
-    if (dark) document.body.classList.add("dark");
-    else document.body.classList.remove("dark");
-});
-
-let high = false;
-document.getElementById("highContrastBtn").addEventListener("click", () => {
-    high = !high;
-    if (high) document.body.classList.add("high-contrast");
-    else document.body.classList.remove("high-contrast");
-});
-
-let fontSize = 100;
-document.getElementById("increaseFont").addEventListener("click", () => {
-    if (fontSize < 150) fontSize += 10;
-    document.body.style.fontSize = fontSize + "%";
-});
-document.getElementById("decreaseFont").addEventListener("click", () => {
-    if (fontSize > 70) fontSize -= 10;
-    document.body.style.fontSize = fontSize + "%";
-});
-// Gerar PDF do resultado
-function gerarPDF() {
-    if (window.ultimoScore === undefined) {
+        window.open(url, "_blank") || (window.location.href = url);
+    } else {
         alert("Calcule o IRQ primeiro.");
-        return;
     }
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    doc.setFontSize(16);
-    doc.text("Relatório do Verificador de Resiliência Quântica (IRQ)", 20, 20);
-    doc.setFontSize(12);
-    doc.text(`Data: ${new Date().toLocaleString("pt-BR")}`, 20, 40);
-    doc.text(`Seu IRQ: ${window.ultimoScore}/7 (${Math.round((window.ultimoScore/7)*100)}%)`, 20, 60);
-    doc.text(`Avaliação: ${window.ultimaFrase}`, 20, 80);
-    doc.text("Obrigado por testar sua resiliência quântica!", 20, 120);
-    doc.save("resultado_irq.pdf");
-}
-function gerarPDF() {
-    if (window.ultimoScore === undefined) {
-        alert("Calcule o IRQ primeiro.");
-        return;
-    }
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    doc.setFontSize(16);
-    doc.text("Relatório do Verificador de Resiliência Quântica (IRQ)", 20, 20);
-    doc.setFontSize(12);
-    doc.text(`Data: ${new Date().toLocaleString("pt-BR")}`, 20, 40);
-    doc.text(`Seu IRQ: ${window.ultimoScore}/7 (${Math.round((window.ultimoScore/7)*100)}%)`, 20, 60);
-    doc.text(`Avaliação: ${window.ultimaFrase}`, 20, 80);
-    doc.text("Obrigado por testar sua resiliência quântica!", 20, 120);
-    doc.save("resultado_irq.pdf");
-}
-
-// Curiosidade interativa
-const quantumCore = document.querySelector('.quantum-core');
-if (quantumCore) {
-    quantumCore.addEventListener('click', () => {
-        const facts = [
-            '🇧🇷 Brasil publicou a 1ª norma pós-quântica da América Latina (IN ITI 35/2026).',
-            '🛡️ A Estratégia E-Ciber (Decreto 12.573) prioriza a criptografia pós-quântica.',
-            '⏳ Especialistas estimam que o Q-Day pode chegar em menos de 10 anos.',
-            '🧠 O IRQ é a primeira ferramenta brasileira de resiliência quântica.'
-        ];
-        const randomFact = facts[Math.floor(Math.random() * facts.length)];
-        alert(randomFact);
-    });
-}
+});
