@@ -84,7 +84,6 @@ function calcularResultado() {
     return { score, percentual, frase };
 }
 
-// Envio real via EmailJS
 function enviarEmailReal(score, frase) {
     if (!emailUsuario) {
         alert("E-mail não informado.");
@@ -188,7 +187,7 @@ document.getElementById("decreaseFont").addEventListener("click", () => {
     document.body.style.fontSize = fontSize + "%";
 });
 
-// Curiosidade interativa (soberania nacional)
+// Curiosidade interativa
 const quantumCore = document.querySelector('.quantum-core');
 if (quantumCore) {
     quantumCore.addEventListener('click', () => {
