@@ -16,6 +16,9 @@ function incrementarTestes() {
     document.getElementById('contadorTestes').innerText = `Testes iniciados: ${atual}`;
 }
 
+// ========== INICIALIZAÇÃO EMAILJS ==========
+emailjs.init("7TC5If25qSsb3p-0S");
+
 // ========== PERGUNTAS ==========
 const perguntas = [
     { texto: "Você usa autenticação em dois fatores (2FA) nas principais contas?", opcaoNao: "❌ Não uso" },
@@ -81,13 +84,25 @@ function calcularResultado() {
     return { score, percentual, frase };
 }
 
-function enviarEmailSimulado(score, frase) {
+// Envio real via EmailJS
+function enviarEmailReal(score, frase) {
     if (!emailUsuario) {
         alert("E-mail não informado.");
         return;
     }
-    localStorage.setItem('ultimo_email_irq', emailUsuario);
-    alert(`✅ (Simulação) Resultado enviado para ${emailUsuario}\n\nSeu IRQ: ${score}/7\n${frase}\n\n(O envio real será ativado quando você configurar o EmailJS.)`);
+    const percentual = Math.round((score / 7) * 100);
+    emailjs.send("service_3ea5o84", "template_1g9ou0p", {
+        to_email: emailUsuario,
+        irq: `${score}/7`,
+        percentual: percentual,
+        frase: frase,
+        data: new Date().toLocaleString("pt-BR")
+    }).then(() => {
+        alert("✅ Resultado enviado para seu e-mail!");
+    }).catch((error) => {
+        console.error(error);
+        alert("❌ Falha ao enviar. Verifique suas credenciais do EmailJS.");
+    });
 }
 
 // Eventos
@@ -122,7 +137,7 @@ document.getElementById("btnCalcular").addEventListener("click", () => {
 
 document.getElementById("btnEnviarEmail").addEventListener("click", () => {
     if (window.ultimoScore !== undefined) {
-        enviarEmailSimulado(window.ultimoScore, window.ultimaFrase);
+        enviarEmailReal(window.ultimoScore, window.ultimaFrase);
     } else {
         alert("Calcule o IRQ primeiro.");
     }
@@ -172,6 +187,7 @@ document.getElementById("decreaseFont").addEventListener("click", () => {
     if (fontSize > 70) fontSize -= 10;
     document.body.style.fontSize = fontSize + "%";
 });
+
 // Curiosidade interativa (soberania nacional)
 const quantumCore = document.querySelector('.quantum-core');
 if (quantumCore) {
