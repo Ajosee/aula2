@@ -150,11 +150,15 @@ document.getElementById("btnCopiar").addEventListener("click", () => {
     } else alert("Nenhum resultado para copiar.");
 });
 
+document.getElementById("btnPDF").addEventListener("click", () => {
+    gerarPDF();
+});
+
 document.getElementById("btnWhatsapp").addEventListener("click", () => {
     if (window.ultimoScore !== undefined) {
         const texto = `Meu IRQ: ${window.ultimoScore}/7 - ${window.ultimaFrase}`;
         const url = `https://wa.me/?text=${encodeURIComponent(texto)}`;
-        window.open(url, "_blank");
+        window.location.href = url;
     } else alert("Calcule o IRQ primeiro.");
 });
 
@@ -186,6 +190,39 @@ document.getElementById("decreaseFont").addEventListener("click", () => {
     if (fontSize > 70) fontSize -= 10;
     document.body.style.fontSize = fontSize + "%";
 });
+// Gerar PDF do resultado
+function gerarPDF() {
+    if (window.ultimoScore === undefined) {
+        alert("Calcule o IRQ primeiro.");
+        return;
+    }
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    doc.setFontSize(16);
+    doc.text("Relatório do Verificador de Resiliência Quântica (IRQ)", 20, 20);
+    doc.setFontSize(12);
+    doc.text(`Data: ${new Date().toLocaleString("pt-BR")}`, 20, 40);
+    doc.text(`Seu IRQ: ${window.ultimoScore}/7 (${Math.round((window.ultimoScore/7)*100)}%)`, 20, 60);
+    doc.text(`Avaliação: ${window.ultimaFrase}`, 20, 80);
+    doc.text("Obrigado por testar sua resiliência quântica!", 20, 120);
+    doc.save("resultado_irq.pdf");
+}
+function gerarPDF() {
+    if (window.ultimoScore === undefined) {
+        alert("Calcule o IRQ primeiro.");
+        return;
+    }
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    doc.setFontSize(16);
+    doc.text("Relatório do Verificador de Resiliência Quântica (IRQ)", 20, 20);
+    doc.setFontSize(12);
+    doc.text(`Data: ${new Date().toLocaleString("pt-BR")}`, 20, 40);
+    doc.text(`Seu IRQ: ${window.ultimoScore}/7 (${Math.round((window.ultimoScore/7)*100)}%)`, 20, 60);
+    doc.text(`Avaliação: ${window.ultimaFrase}`, 20, 80);
+    doc.text("Obrigado por testar sua resiliência quântica!", 20, 120);
+    doc.save("resultado_irq.pdf");
+}
 
 // Curiosidade interativa
 const quantumCore = document.querySelector('.quantum-core');
