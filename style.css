@@ -270,3 +270,69 @@ footer {
         transition: none !important;
     }
 }
+/* ========== ANIMAÇÕES PROFISSIONAIS ========== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes typewriter {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink {
+    50% { border-color: transparent; }
+}
+
+/* Pulso quântico (já existente, mas mantemos) */
+@keyframes pulseRing {
+    0% { transform: scale(0.8); opacity: 0.8; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+@keyframes spinGlow {
+    0% { transform: rotate(0deg); text-shadow: 0 0 2px #4caf50; }
+    100% { transform: rotate(360deg); text-shadow: 0 0 8px #4caf50; }
+}
+
+/* Classes para aplicar as animações */
+.fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.typewriter {
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 2px solid #4caf50;
+    width: 0;
+    animation: typewriter 2s steps(40, end) forwards, blink 0.75s step-end infinite;
+}
+
+/* Respeita preferência do usuário por movimento reduzido */
+@media (prefers-reduced-motion: reduce) {
+    .fade-in-up, .typewriter, .quantum-pulse * {
+        animation: none !important;
+        transition: none !important;
+    }
+    .typewriter {
+        white-space: normal;
+        border-right: none;
+        width: 100%;
+    }
+}
+
+/* Ajuste para telas pequenas */
+@media (max-width: 600px) {
+    .typewriter {
+        white-space: normal;
+        border-right: none;
+        animation: none;
+        width: 100%;
+    }
+}

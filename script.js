@@ -172,3 +172,17 @@ document.getElementById("decreaseFont").addEventListener("click", () => {
     if (fontSize > 70) fontSize -= 10;
     document.body.style.fontSize = fontSize + "%";
 });
+// Curiosidade interativa (soberania nacional)
+const quantumCore = document.querySelector('.quantum-core');
+if (quantumCore) {
+    quantumCore.addEventListener('click', () => {
+        const facts = [
+            '🇧🇷 Brasil publicou a 1ª norma pós-quântica da América Latina (IN ITI 35/2026).',
+            '🛡️ A Estratégia E-Ciber (Decreto 12.573) prioriza a criptografia pós-quântica.',
+            '⏳ Especialistas estimam que o Q-Day pode chegar em menos de 10 anos.',
+            '🧠 O IRQ é a primeira ferramenta brasileira de resiliência quântica.'
+        ];
+        const randomFact = facts[Math.floor(Math.random() * facts.length)];
+        alert(randomFact);
+    });
+}
