@@ -336,3 +336,18 @@ footer {
         width: 100%;
     }
 }
+cat >> style.css << 'EOF'
+
+/* Animação de curiosidade (ajustada) */
+.curiosity-animation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    background: linear-gradient(135deg, rgba(10,43,62,0.05), rgba(76,175,80,0.05));
+    border-radius: 40px;
+    padding: 1.5rem;
+    margin: 2rem 0 1rem 0;
+    flex-wrap: wrap;
+}
+EOF
