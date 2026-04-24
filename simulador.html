@@ -67,6 +67,16 @@
             padding: 1rem;
             border-radius: 12px;
         }
+        .frase {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #e8f0e8;
+            border-left: 4px solid #4caf50;
+            font-style: italic;
+            border-radius: 12px;
+            font-size: 1rem;
+            color: #2c3e2f;
+        }
     </style>
 </head>
 <body>
@@ -78,14 +88,14 @@
         </ul>
     </nav>
 </header>
-<main>
+<main id="conteudo-simulador">
     <div class="simulador-container">
         <h1>⚛️ Simulador de Ataque Quântico (Algoritmo de Shor)</h1>
         <p>Este simulador demonstra como um computador quântico poderia quebrar a criptografia RSA fatorando números grandes. <strong>Versão educacional clássica</strong> (ilustra a lógica matemática).</p>
 
         <div class="input-group">
             <label>Número a ser fatorado (N):</label>
-            <input type="number" id="numero" value="15" step="1" min="3">
+            <input type="number" id="numero" value="15" step="1" min="3" max="10000">
         </div>
         <button id="fatorarBtn">⚛️ Fatorar (Simular Ataque)</button>
         <button id="aleatorioBtn">🎲 Número aleatório</button>
@@ -97,6 +107,7 @@
             <strong>Log do algoritmo:</strong><br>
             Aguardando ação...
         </div>
+        <div id="fraseContainer" class="frase" style="display:none;"></div>
     </div>
 </main>
 <footer style="text-align:center; margin-top:2rem;">
@@ -104,7 +115,26 @@
 </footer>
 
 <script>
-    // Função auxiliar para MDC (BigInt)
+    // === Banco de frases motivadoras/educativas sobre segurança quântica ===
+    const frases = [
+        "🧠 A segurança digital de amanhã depende das escolhas que fazemos hoje. Comece a se preparar para a era quântica!",
+        "🔐 Um computador quântico de 4.000 qubits poderia quebrar o RSA-2048 em horas. A criptografia pós-quântica é a resposta.",
+        "🌍 O Brasil já deu o primeiro passo: a IN ITI 35/2026 introduz algoritmos pós-quânticos na ICP-Brasil.",
+        "⚡ O Q-Day não é uma questão de 'se', mas de 'quando'. Sua resiliência quântica começa com conhecimento.",
+        "📚 A Estratégia E-Ciber (Decreto 12.573) prioriza a cibersegurança quântica. Você está alinhado?",
+        "💡 O algoritmo de Shor é a prova matemática de que a computação quântica transformará a criptografia.",
+        "🛡️ Soberania digital exige ação antecipada. Calcule seu IRQ e proteja seus dados hoje.",
+        "🧪 Pequenas melhorias na sua segurança digital (2FA, senhas fortes) aumentam sua resiliência contra ataques quânticos."
+    ];
+
+    function exibirFraseAleatoria() {
+        const idx = Math.floor(Math.random() * frases.length);
+        const container = document.getElementById('fraseContainer');
+        container.innerHTML = `💭 <strong>Reflexão:</strong> ${frases[idx]}`;
+        container.style.display = 'block';
+    }
+
+    // Função MDC (BigInt)
     function gcd(a, b) {
         while (b !== 0n) {
             [a, b] = [b, a % b];
@@ -112,16 +142,15 @@
         return a;
     }
 
-    // Adiciona texto ao log
     function logPasso(msg) {
         const logDiv = document.getElementById('passos');
         logDiv.innerHTML += `<div>> ${msg}</div>`;
         logDiv.scrollTop = logDiv.scrollHeight;
     }
 
-    // Limpa log
     function limparLog() {
         document.getElementById('passos').innerHTML = '<strong>Log do algoritmo:</strong><br>';
+        document.getElementById('fraseContainer').style.display = 'none';
     }
 
     // Simulação do algoritmo de Shor (versão clássica)
@@ -133,7 +162,6 @@
         logPasso(`Tentando fatorar N = ${N}`);
         for (let attempt = 1; attempt <= 10; attempt++) {
             logPasso(`Tentativa ${attempt}: escolhendo a aleatório...`);
-            // Escolhe a entre 2 e N-1
             const a = BigInt(Math.floor(Math.random() * Number(N - 2n))) + 2n;
             logPasso(`a = ${a}`);
 
@@ -144,7 +172,6 @@
             }
 
             logPasso(`MDC(${a}, ${N}) = 1, buscando ordem r...`);
-            // Encontrar ordem r (menor r tal que a^r ≡ 1 mod N)
             let r = 1n;
             let power = a;
             const maxR = N;
@@ -174,12 +201,15 @@
         return null;
     }
 
-    // Função principal
     async function fatorar() {
         const input = document.getElementById('numero').value;
         let N = BigInt(parseInt(input));
         if (N < 2n) {
             alert("Digite um número maior que 1.");
+            return;
+        }
+        if (N > 10000n) {
+            alert("Para fins de simulação, use números até 10000 (performance e didática).");
             return;
         }
         limparLog();
@@ -202,13 +232,14 @@
             Não foi possível encontrar um fator não-trivial para ${N} com as tentativas realizadas.<br>
             (O algoritmo de Shor é probabilístico; tente novamente ou escolha outro número.)`;
         }
+        exibirFraseAleatoria();
     }
 
     function numeroAleatorio() {
-        const min = 3, max = 100;
+        const min = 3, max = 200;
         const num = Math.floor(Math.random() * (max - min + 1)) + min;
         document.getElementById('numero').value = num;
-        // opcional: fatorar automaticamente?
+        // opcional: fatorar automaticamente? Não, para manter controle do usuário.
     }
 
     document.getElementById('fatorarBtn').addEventListener('click', fatorar);
