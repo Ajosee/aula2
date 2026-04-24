@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Ataque Quântico | Algoritmo de Shor</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .simulador-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--card-bg, white);
+            border-radius: 24px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .simulador-container h1 {
+            color: var(--text-primary, #1a2a3a);
+            border-left: 5px solid #4caf50;
+            padding-left: 1rem;
+        }
+        .input-group {
+            margin: 1.5rem 0;
+        }
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid var(--border-light, #e2e8f0);
+            border-radius: 12px;
+            background: var(--card-bg, white);
+            color: var(--text-primary, #1a2a3a);
+        }
+        button {
+            background-color: #0a2b3e;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-right: 1rem;
+        }
+        button:hover {
+            background-color: #4caf50;
+        }
+        .resultado {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: var(--pergunta-bg, #f9f9fc);
+            border-radius: 16px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        .passos {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-primary, #1a2a3a);
+            max-height: 300px;
+            overflow-y: auto;
+            background: #f0f0f0;
+            padding: 1rem;
+            border-radius: 12px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="logo"><span>⚛️</span> A.J.B. Silva</div>
+    <nav>
+        <ul>
+            <li><a href="index.html">← Voltar ao verificador</a></li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <div class="simulador-container">
+        <h1>⚛️ Simulador de Ataque Quântico (Algoritmo de Shor)</h1>
+        <p>Este simulador demonstra como um computador quântico poderia quebrar a criptografia RSA fatorando números grandes. <strong>Versão educacional clássica</strong> (ilustra a lógica matemática).</p>
+
+        <div class="input-group">
+            <label>Número a ser fatorado (N):</label>
+            <input type="number" id="numero" value="15" step="1" min="3">
+        </div>
+        <button id="fatorarBtn">⚛️ Fatorar (Simular Ataque)</button>
+        <button id="aleatorioBtn">🎲 Número aleatório</button>
+
+        <div id="resultado" class="resultado">
+            <strong>Resultado:</strong> Clique em "Fatorar"
+        </div>
+        <div id="passos" class="passos">
+            <strong>Log do algoritmo:</strong><br>
+            Aguardando ação...
+        </div>
+    </div>
+</main>
+<footer style="text-align:center; margin-top:2rem;">
+    <p>© 2026 – Antonio J.B. Silva | Demonstração do Algoritmo de Shor</p>
+</footer>
+
+<script>
+    // Função auxiliar para MDC (BigInt)
+    function gcd(a, b) {
+        while (b !== 0n) {
+            [a, b] = [b, a % b];
+        }
+        return a;
+    }
+
+    // Adiciona texto ao log
+    function logPasso(msg) {
+        const logDiv = document.getElementById('passos');
+        logDiv.innerHTML += `<div>> ${msg}</div>`;
+        logDiv.scrollTop = logDiv.scrollHeight;
+    }
+
+    // Limpa log
+    function limparLog() {
+        document.getElementById('passos').innerHTML = '<strong>Log do algoritmo:</strong><br>';
+    }
+
+    // Simulação do algoritmo de Shor (versão clássica)
+    async function shorFactor(N) {
+        if (N < 2n) return null;
+        if (N % 2n === 0n) return 2n;
+        if (N < 3n) return null;
+
+        logPasso(`Tentando fatorar N = ${N}`);
+        for (let attempt = 1; attempt <= 10; attempt++) {
+            logPasso(`Tentativa ${attempt}: escolhendo a aleatório...`);
+            // Escolhe a entre 2 e N-1
+            const a = BigInt(Math.floor(Math.random() * Number(N - 2n))) + 2n;
+            logPasso(`a = ${a}`);
+
+            const d = gcd(a, N);
+            if (d > 1n && d < N) {
+                logPasso(`MDC(${a}, ${N}) = ${d} → fator encontrado!`);
+                return d;
+            }
+
+            logPasso(`MDC(${a}, ${N}) = 1, buscando ordem r...`);
+            // Encontrar ordem r (menor r tal que a^r ≡ 1 mod N)
+            let r = 1n;
+            let power = a;
+            const maxR = N;
+            for (let i = 1n; i <= maxR; i++) {
+                power = (power * a) % N;
+                if (power === 1n) {
+                    r = i + 1n;
+                    break;
+                }
+            }
+            logPasso(`Ordem r = ${r}`);
+
+            if (r % 2n === 0n) {
+                const half_r = r / 2n;
+                let x = 1n;
+                for (let i = 0n; i < half_r; i++) x = (x * a) % N;
+                const candidate = (x + 1n) % N;
+                const f = gcd(candidate, N);
+                if (f > 1n && f < N) {
+                    logPasso(`Combinando, encontramos fator = ${f}`);
+                    return f;
+                }
+            }
+            logPasso(`Falha nesta tentativa. Repetindo...`);
+        }
+        logPasso(`Após 10 tentativas, não foi possível encontrar um fator.`);
+        return null;
+    }
+
+    // Função principal
+    async function fatorar() {
+        const input = document.getElementById('numero').value;
+        let N = BigInt(parseInt(input));
+        if (N < 2n) {
+            alert("Digite um número maior que 1.");
+            return;
+        }
+        limparLog();
+        logPasso(`Iniciando simulação do Algoritmo de Shor para N = ${N}`);
+        const start = performance.now();
+        const factor = await shorFactor(N);
+        const end = performance.now();
+        const tempo = (end - start).toFixed(2);
+        const resultadoDiv = document.getElementById('resultado');
+        if (factor && factor !== 1n && factor !== N) {
+            const outro = N / factor;
+            resultadoDiv.innerHTML = `<strong>✅ Fator encontrado!</strong><br>
+            N = ${N}<br>
+            Fator 1: ${factor}<br>
+            Fator 2: ${outro}<br>
+            Tempo de simulação: ${tempo} ms<br>
+            <em>Na prática, um computador quântico faria isso em segundos, mesmo para números enormes.</em>`;
+        } else {
+            resultadoDiv.innerHTML = `<strong>❌ Falha na fatoração.</strong><br>
+            Não foi possível encontrar um fator não-trivial para ${N} com as tentativas realizadas.<br>
+            (O algoritmo de Shor é probabilístico; tente novamente ou escolha outro número.)`;
+        }
+    }
+
+    function numeroAleatorio() {
+        const min = 3, max = 100;
+        const num = Math.floor(Math.random() * (max - min + 1)) + min;
+        document.getElementById('numero').value = num;
+        // opcional: fatorar automaticamente?
+    }
+
+    document.getElementById('fatorarBtn').addEventListener('click', fatorar);
+    document.getElementById('aleatorioBtn').addEventListener('click', numeroAleatorio);
+</script>
+</body>
+</html>
