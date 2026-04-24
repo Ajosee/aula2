@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
+<head><script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Antonio J.B. Silva | Criptografia Pós-Quântica</title>
@@ -188,6 +188,32 @@
 </footer>
 
 <script src="script.js"></script>
+<script>
+document.getElementById("btn-mostrar-simulador").addEventListener("click", function(e) {
+    e.preventDefault();
+    const container = document.getElementById("simulador-container");
+    if (container.style.display === "none") {
+        if (container.innerHTML.trim() === "") {
+            fetch("simulador.html")
+                .then(response => response.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, "text/html");
+                    const simuladorContent = doc.querySelector("main").innerHTML;
+                    container.innerHTML = `<div style="background: var(--card-bg, white); border-radius: 24px; padding: 1.5rem;">${simuladorContent}</div>`;
+                    container.style.display = "block";
+                    container.scrollIntoView({ behavior: "smooth", block: "start" });
+                })
+                .catch(err => console.error("Erro ao carregar simulador:", err));
+        } else {
+            container.style.display = "block";
+            container.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+    } else {
+        container.style.display = "none";
+    }
+});
+</script>
 <script>
 document.getElementById("btn-mostrar-simulador").addEventListener("click", function(e) {
     e.preventDefault();
