@@ -115,7 +115,6 @@
 </footer>
 
 <script>
-    // === Banco de frases motivadoras/educativas sobre segurança quântica ===
     const frases = [
         "🧠 A segurança digital de amanhã depende das escolhas que fazemos hoje. Comece a se preparar para a era quântica!",
         "🔐 Um computador quântico de 4.000 qubits poderia quebrar o RSA-2048 em horas. A criptografia pós-quântica é a resposta.",
@@ -134,7 +133,6 @@
         container.style.display = 'block';
     }
 
-    // Função MDC (BigInt)
     function gcd(a, b) {
         while (b !== 0n) {
             [a, b] = [b, a % b];
@@ -153,7 +151,6 @@
         document.getElementById('fraseContainer').style.display = 'none';
     }
 
-    // Simulação do algoritmo de Shor (versão clássica)
     async function shorFactor(N) {
         if (N < 2n) return null;
         if (N % 2n === 0n) return 2n;
@@ -239,7 +236,6 @@
         const min = 3, max = 200;
         const num = Math.floor(Math.random() * (max - min + 1)) + min;
         document.getElementById('numero').value = num;
-        // opcional: fatorar automaticamente? Não, para manter controle do usuário.
     }
 
     document.getElementById('fatorarBtn').addEventListener('click', fatorar);

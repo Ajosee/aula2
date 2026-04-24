@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head><script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Antonio J.B. Silva | Criptografia Pós-Quântica</title>
@@ -81,12 +81,14 @@
                     </div>
                     <a href="#" class="btn-projeto">🔗 Ver no GitHub</a>
                     <div class="links-extras">
-    <a href="https://www.gov.br/mcti/pt-br/acompanhe-o-mcti/noticias/2026/04/centro-internacional-de-computacao-quantica-no-brasil-sera-um-polo-de-inovacao-e-capacitacao" target="_blank">🔗 Centro Internacional de Computação Quântica (CIQuanta)</a><br>
+                        <a href="#">🔗 Centro Internacional de Computação Quântica (CIQuanta)</a>
+<a href="#" id="btn-mostrar-simulador" style="cursor:pointer;">🔬 Simulador Interativo (Algoritmo de Shor)</a>
     <a href="#" id="btn-mostrar-simulador" style="cursor:pointer;">🔬 Simulador Interativo (Algoritmo de Shor)</a>
-</div><div id="simulador-container" style="display:none; margin-top: 2rem; border-top: 2px solid #4caf50; padding-top: 1rem;"></div>
-
+                    </div>
                 </div>
             </div>
+<div id="simulador-container" style="display:none; margin-top: 2rem; border-top: 2px solid #4caf50; padding-top: 1rem;"></div>
+<div id="simulador-container" style="display:none; margin-top: 2rem; border-top: 2px solid #4caf50; padding-top: 1rem;"></div>
             <!-- Card 2: Guia de Migração Pós-Quântica – ITI -->
             <div class="card-projeto">
                 <img src="https://placehold.co/600x400/0a1c2a/4caf50?text=Guia+ITI" alt="Guia">
@@ -188,23 +190,16 @@
 </footer>
 
 <script src="script.js"></script>
+
 <script>
-document.getElementById("btn-mostrar-simulador").addEventListener("click", function(e) {
-    e.preventDefault();
+function carregarSimulador() {
     const container = document.getElementById("simulador-container");
     if (container.style.display === "none") {
-        if (container.innerHTML.trim() === "") {
-            fetch("simulador.html")
-                .then(response => response.text())
-                .then(html => {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, "text/html");
-                    const simuladorContent = doc.querySelector("main").innerHTML;
-                    container.innerHTML = `<div style="background: var(--card-bg, white); border-radius: 24px; padding: 1.5rem;">${simuladorContent}</div>`;
-                    container.style.display = "block";
-                    container.scrollIntoView({ behavior: "smooth", block: "start" });
-                })
-                .catch(err => console.error("Erro ao carregar simulador:", err));
+        if (!container.hasAttribute("data-carregado")) {
+            container.innerHTML = '<iframe src="simulador.html" style="width:100%; min-height:700px; border:none; border-radius:24px;"></iframe>';
+            container.setAttribute("data-carregado", "true");
+            container.style.display = "block";
+            container.scrollIntoView({ behavior: "smooth", block: "start" });
         } else {
             container.style.display = "block";
             container.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -212,33 +207,11 @@ document.getElementById("btn-mostrar-simulador").addEventListener("click", funct
     } else {
         container.style.display = "none";
     }
+}
+document.addEventListener("DOMContentLoaded", function() {
+    const btn = document.getElementById("btn-mostrar-simulador");
+    if (btn) btn.addEventListener("click", carregarSimulador);
 });
 </script>
-<script>
-document.getElementById("btn-mostrar-simulador").addEventListener("click", function(e) {
-    e.preventDefault();
-    const container = document.getElementById("simulador-container");
-    if (container.style.display === "none") {
-        if (container.innerHTML.trim() === "") {
-            fetch("simulador.html")
-                .then(response => response.text())
-                .then(html => {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, "text/html");
-                    const simuladorContent = doc.querySelector("main").innerHTML;
-                    container.innerHTML = `<div style="background: var(--card-bg, white); border-radius: 24px; padding: 1.5rem;">${simuladorContent}</div>`;
-                    container.style.display = "block";
-                    container.scrollIntoView({ behavior: "smooth", block: "start" });
-                })
-                .catch(err => console.error("Erro ao carregar simulador:", err));
-        } else {
-            container.style.display = "block";
-            container.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-    } else {
-        container.style.display = "none";
-    }
-});
-</script>
-</body>
 </html>
+</body>
