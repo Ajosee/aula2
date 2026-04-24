@@ -87,8 +87,6 @@
                     </div>
                 </div>
             </div>
-<div id="simulador-container" style="display:none; margin-top: 2rem; border-top: 2px solid #4caf50; padding-top: 1rem;"></div>
-<div id="simulador-container" style="display:none; margin-top: 2rem; border-top: 2px solid #4caf50; padding-top: 1rem;"></div>
             <!-- Card 2: Guia de Migração Pós-Quântica – ITI -->
             <div class="card-projeto">
                 <img src="https://placehold.co/600x400/0a1c2a/4caf50?text=Guia+ITI" alt="Guia">
@@ -192,25 +190,5 @@
 <script src="script.js"></script>
 
 <script>
-function carregarSimulador() {
-    const container = document.getElementById("simulador-container");
-    if (container.style.display === "none") {
-        if (!container.hasAttribute("data-carregado")) {
-            container.innerHTML = '<iframe src="simulador.html" style="width:100%; min-height:700px; border:none; border-radius:24px;"></iframe>';
-            container.setAttribute("data-carregado", "true");
-            container.style.display = "block";
-            container.scrollIntoView({ behavior: "smooth", block: "start" });
-        } else {
-            container.style.display = "block";
-            container.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-    } else {
-        container.style.display = "none";
-    }
-}
-document.addEventListener("DOMContentLoaded", function() {
-    if (btn) btn.addEventListener("click", carregarSimulador);
-});
-</script>
 </html>
 </body>
