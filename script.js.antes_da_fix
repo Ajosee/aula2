@@ -33,7 +33,6 @@ let respostas = new Array(7).fill(null);
 let emailUsuario = "";
 
 function renderizarPerguntas() {
-    console.log("renderizarPerguntas chamada");
     const container = document.getElementById("perguntasContainer");
     container.innerHTML = "";
     perguntas.forEach((p, idx) => {
@@ -128,7 +127,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const btnIniciar = document.getElementById("btnIniciar");
     if (btnIniciar) {
         btnIniciar.addEventListener("click", () => {
-        console.log("Clique no botão Iniciar detectado");
             const email = document.getElementById("userEmail").value.trim();
             const consent = document.getElementById("lgpdConsent").checked;
             const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -142,7 +140,6 @@ document.addEventListener("DOMContentLoaded", function() {
             incrementarTestes();
 
             document.getElementById("emailSection").style.display = "none";
-        console.log("emailSection ocultada, perguntasArea será exibida");
             document.getElementById("perguntasArea").style.display = "block";
             renderizarPerguntas();
         });

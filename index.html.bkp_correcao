@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>...</title>
+</head>    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Antonio J.B. Silva | Criptografia Pós-Quântica</title>
@@ -43,6 +49,13 @@
         </div>
       </div>
     </div>
+<div class="analise-risco">
+  <h2>⚡ Por que a resiliência quântica é uma questão de segurança nacional?</h2>
+  <p>Estudos recentes de órgãos oficiais, como a <strong>ABIN</strong>, indicam que a chegada da computação quântica (prevista para ocorrer entre <strong>5 e 15 anos</strong>) tornará obsoleta a criptografia atual. O relatório "Desafios de Inteligência 2026" aponta a transição para a criptografia pós-quântica como um dos cinco maiores desafios de inteligência para o Brasil.</p>
+  <p>O superintendente de Segurança da Informação do <strong>Serpro</strong>, Tiago Iahn, declarou em março de 2026 que a computação quântica <strong>já representa uma ameaça real</strong>, devido ao fenômeno "colha agora, decifre depois" (<em>harvest now, decrypt later</em>). Dados sensíveis capturados hoje podem ser violados no futuro, expondo comunicações governamentais, infraestruturas críticas e até mesmo a segurança das urnas eletrônicas.</p>
+  <p>Para se antecipar, o <strong>ITI</strong> já publicou a Instrução Normativa nº 35/2026, que incorpora algoritmos pós-quânticos à <strong>ICP-Brasil</strong> e às assinaturas do <strong>GOV.BR</strong>. A transição, no entanto, é complexa e dispendiosa, e o custo de um único vazamento de dados estratégicos pode ser imensurável para o país.</p>
+  <p>🔗 <a href="https://www.in.gov.br/web/dou/-/instrucao-normativa-iti-n-35-de-30-de-janeiro-de-2026-684841143" target="_blank" rel="noopener noreferrer">Leia a Instrução Normativa ITI nº 35/2026 (DOU)</a></p>
+</div>
     <section id="sobre">
         <h2>🔐 Sobre mim</h2>
         <div class="sobre-container">
@@ -80,10 +93,9 @@
                         <span class="tec-badge">WebAssembly</span>
                         <span class="tec-badge">Qiskit</span>
                     </div>
-                    <a href="https://github.com/Ajosee" target="_blank" rel="noopener noreferrer" class="btn-projeto">🔗 Ver no GitHub</a>
+                    <a href="#" class="btn-projeto">🔗 Ver no GitHub</a>
                     <div class="links-extras">
-                        <a href="https://www.gov.br/mcti/pt-br/acompanhe-o-mcti/noticias/2026/04/centro-internacional-de-computacao-quantica-no-brasil-sera-um-polo-de-inovacao-e-capacitacao" target="_blank" rel="noopener noreferrer">🔗 Centro Internacional de Computação Quântica (CIQuanta)</a>
-    <a href="simulador.html" target="_blank" rel="noopener noreferrer">🔬 Simulador Interativo (Algoritmo de Shor)</a>
+                        <a href="#">🔗 Centro Internacional de Computação Quântica (CIQuanta)</a>
                     </div>
                 </div>
             </div>
@@ -99,10 +111,10 @@
                         <span class="tec-badge">Markdown</span>
                         <span class="tec-badge">LGPD</span>
                     </div>
-                    <a href="https://github.com/Ajosee" target="_blank" rel="noopener noreferrer" class="btn-projeto">🔗 Ver no GitHub</a>
+                    <a href="#" class="btn-projeto">🔗 Ver no GitHub</a>
                     <div class="links-extras">
-                        <a href="https://www.in.gov.br/web/dou/-/instrucao-normativa-iti-n-35-de-30-de-janeiro-de-2026-684841143" target="_blank" rel="noopener noreferrer">📄 Instrução Normativa ITI nº 35/2026 (DOU)</a><br>
-                        <a href="https://www.gov.br/iti/pt-br/assuntos/noticias/indice-de-noticias/iti-publica-instrucao-normativa-que-incorpora-algoritmos-pos-quanticos-a-icp-brasil" target="_blank" rel="noopener noreferrer">🔗 ITI publica incorporação de algoritmos pós-quânticos</a>
+                        <a href="#">📄 Instrução Normativa ITI nº 35/2026 (DOU)</a><br>
+                        <a href="#">🔗 ITI publica incorporação de algoritmos pós-quânticos</a>
                     </div>
                 </div>
             </div>
@@ -117,10 +129,10 @@
                         <span class="tec-badge">D3.js</span>
                         <span class="tec-badge">API Gov</span>
                     </div>
-                    <a href="https://github.com/Ajosee" target="_blank" rel="noopener noreferrer" class="btn-projeto">🔗 Ver no GitHub</a>
+                    <a href="#" class="btn-projeto">🔗 Ver no GitHub</a>
                     <div class="links-extras">
-                        <a href="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2025/decreto/D12573.htm" target="_blank" rel="noopener noreferrer">⚖️ Decreto nº 12.573/2025 (E-Ciber)</a><br>
-                        <a href="https://www.gov.br/governodigital/pt-br/privacidade-e-seguranca/legislacao-federal" target="_blank" rel="noopener noreferrer">📚 Legislação Federal em Segurança da Informação</a>
+                        <a href="#">⚖️ Decreto nº 12.573/2025 (E-Ciber)</a><br>
+                        <a href="#">📚 Legislação Federal em Segurança da Informação</a>
                     </div>
                 </div>
             </div>
@@ -132,13 +144,6 @@
     <!-- VERIFICADOR IRQ -->
     <section id="verificador">
 
-    <div class="analise-risco">
-        <h2>⚡ Por que a resiliência quântica é uma questão de segurança nacional?</h2>
-        <p>Estudos recentes de órgãos oficiais, como a <strong>ABIN</strong>, indicam que a chegada da computação quântica (prevista para ocorrer entre <strong>5 e 15 anos</strong>) tornará obsoleta a criptografia atual. O relatório "Desafios de Inteligência 2026" aponta a transição para a criptografia pós-quântica como um dos cinco maiores desafios de inteligência para o Brasil.</p>
-        <p>O superintendente de Segurança da Informação do <strong>Serpro</strong>, Tiago Iahn, declarou em março de 2026 que a computação quântica <strong>já representa uma ameaça real</strong>, devido ao fenômeno "colha agora, decifre depois" (<em>harvest now, decrypt later</em>). Dados sensíveis capturados hoje podem ser violados no futuro, expondo comunicações governamentais, infraestruturas críticas e até mesmo a segurança das urnas eletrônicas.</p>
-        <p>Para se antecipar, o <strong>ITI</strong> já publicou a Instrução Normativa nº 35/2026, que incorpora algoritmos pós-quânticos à <strong>ICP-Brasil</strong> e às assinaturas do <strong>GOV.BR</strong>. A transição, no entanto, é complexa e dispendiosa, e o custo de um único vazamento de dados estratégicos pode ser imensurável para o país.</p>
-        <p>🔗 <a href="https://www.in.gov.br/web/dou/-/instrucao-normativa-iti-n-35-de-30-de-janeiro-de-2026-684841143" target="_blank" rel="noopener noreferrer">Leia a Instrução Normativa ITI nº 35/2026 (DOU)</a></p>
-    </div>
         <h2>🧠 Verificador de Resiliência Quântica (IRQ)</h2>
         <div class="quiz-container">
             <p>Responda <strong>7 perguntas</strong> rápidas e descubra seu Índice de Resiliência Quântica.</p>
@@ -176,7 +181,7 @@
 <footer>
     <p>© 2026 – Antonio J.B. Silva | Verificador de Segurança Pessoal – Era Quântica</p>
     <div class="footer-links">
-        <a href="https://github.com/Ajosee" target="_blank" rel="noopener noreferrer">🔗 GitHub</a> | <a href="javascript:void(0)" style="cursor:pointer;">💼 LinkedIn</a> | <a href="javascript:void(0)" style="cursor:pointer;">📄 Lattes</a> | <a href="mailto:antonio@ajbsilva.tec.br">✉️ antonio@ajbsilva.tec.br</a> | <a href="privacidade.html">🔒 Privacidade (LGPD)</a>
+        <a href="#">🔗 GitHub</a> | <a href="#">💼 LinkedIn</a> | <a href="#">📄 Lattes</a> | <a href="#">✉️ antonio@ajbsilva.tec.br</a> | <a href="privacidade.html">🔒 Privacidade (LGPD)</a>
     </div>
     <div class="credito-frase">
         🛡️ Alinhado à Estratégia Nacional de Cibersegurança (Decreto 12.573/2025)<br>
@@ -187,7 +192,6 @@
     <a href="#" class="voltar-topo" id="voltarTopo">↥ Voltar ao topo</a>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
