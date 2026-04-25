@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>⚛️ Simulador Quântico Avançado: Shor + Grover + Ameaça</title>
+    <title>⚛️ Simulador Quântico Avançado: Shor + Grover + Ameaça + Defesa</title>
     <link rel="stylesheet" href="style.css">
     <style>
         .simulador-container { max-width: 1000px; margin: 2rem auto; padding: 2rem; background: var(--card-bg, white); border-radius: 24px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
@@ -99,7 +99,24 @@
             <button id="auditarBtn">📊 Gerar pontuação de resiliência</button>
             <div id="resultadoAudit" class="prob" style="margin-top:1rem; display:none;"></div>
         </div>
-        <div class="frase-final" id="threatFrase" style="display:block;">
+        <div style="margin-top:2rem; border-top:2px solid #ccc; padding-top:1rem;">
+            <h3>🔐 Simulação de Criptografia Pós‑Quântica (Kyber / ML-KEM)</h3>
+            <p>Kyber é um algoritmo de encapsulamento de chaves seguro contra computadores quânticos. Diferente do RSA/ECC, ele não é quebrado por Shor ou Grover.</p>
+            <button id="gerarKyberBtn">⚛️ Gerar par de chaves pós‑quânticas</button>
+            <div id="kyberResultado" class="resultado" style="margin-top:1rem;">Clique no botão para ver a simulação.</div>
+        </div>
+        <div style="margin-top:2rem; border-top:2px solid #ccc; padding-top:1rem;">
+            <h3>🔐 Distribuição Quântica de Chaves (BB84) – Simulação</h3>
+            <p>Alice envia qubits para Bob através de um canal quântico. Eva pode tentar interceptar, mas a mecânica quântica a denuncia.</p>
+            <div class="input-group">
+                <label>Número de bits a serem transmitidos:</label>
+                <input type="number" id="bb84Bits" value="8" min="4" max="20" step="2">
+            </div>
+            <label><input type="checkbox" id="bb84Eva"> 🕵️‍♂️ Ativar interceptação de Eva (espionagem)</label>
+            <button id="bb84SimularBtn">⚛️ Iniciar BB84</button>
+            <div id="bb84Resultado" class="resultado" style="margin-top:1rem;">Clique no botão para simular a troca de chaves.</div>
+        </div>
+        <div class="frase-final" style="margin-top:1rem;">
             💡 <strong>Harvest Now, Decrypt Later:</strong> Dados criptografados hoje podem ser armazenados e decifrados por um computador quântico no futuro. A migração para criptografia pós‑quântica deve começar agora.
         </div>
     </div>
@@ -126,7 +143,7 @@
     function updateProgress(id, percent) { document.getElementById(id).style.width = `${percent}%`; }
 
     // ================== CONTADOR Q-DAY ==================
-    const alvoQDay = new Date(2036, 0, 1); // 1º de janeiro de 2036 (estimativa educacional)
+    const alvoQDay = new Date(2036, 0, 1);
     function atualizarCountdown() {
         const agora = new Date();
         const diff = alvoQDay - agora;
@@ -173,6 +190,76 @@
         else if (score >= 50) resultadoAudit.innerHTML += "⚠️ Bom, mas há margem significativa para melhoria. Revise as recomendações.";
         else resultadoAudit.innerHTML += "❌ Atenção! Sua organização está vulnerável. Inicie imediatamente um plano de migração pós‑quântica.";
     };
+
+    // ================== KYBER (SIMULAÇÃO) ==================
+    const gerarKyberBtn = document.getElementById('gerarKyberBtn');
+    if (gerarKyberBtn) {
+        gerarKyberBtn.onclick = () => {
+            const kyberResultado = document.getElementById("kyberResultado");
+            kyberResultado.innerHTML = "<strong>⚛️ Gerando chaves pós‑quânticas (simulação)...</strong><br>";
+            setTimeout(() => {
+                const chavePublica = "kyber_pub_" + Math.random().toString(36).substring(2, 15);
+                const chavePrivada = "kyber_priv_" + Math.random().toString(36).substring(2, 15);
+                kyberResultado.innerHTML += `✅ <strong>Chave pública simulada:</strong> ${chavePublica}<br>`;
+                kyberResultado.innerHTML += `🔒 <strong>Chave privada simulada:</strong> ${chavePrivada}<br>`;
+                kyberResultado.innerHTML += `<em>Em um ambiente real, o Kyber usaria álgebra de módulos e resistiria a ataques quânticos, ao contrário do RSA/ECC.</em>`;
+            }, 500);
+        };
+    }
+
+    // ================== BB84 (SIMULAÇÃO) ==================
+    const bb84SimularBtn = document.getElementById('bb84SimularBtn');
+    if (bb84SimularBtn) {
+        bb84SimularBtn.onclick = () => {
+            const numBits = parseInt(document.getElementById("bb84Bits").value);
+            const temEva = document.getElementById("bb84Eva").checked;
+            const resultadoDiv = document.getElementById("bb84Resultado");
+            resultadoDiv.innerHTML = "<strong>🔐 Iniciando protocolo BB84...</strong><br>";
+            // Simula bases de Alice e Bob (0 = +, 1 = ×)
+            const basesAlice = [];
+            const bitsAlice = [];
+            for (let i = 0; i < numBits; i++) {
+                basesAlice.push(Math.random() < 0.5 ? 0 : 1);
+                bitsAlice.push(Math.random() < 0.5 ? 0 : 1);
+            }
+            let basesBob = [];
+            if (temEva) {
+                basesBob = basesAlice.map(() => Math.random() < 0.5 ? 0 : 1);
+            } else {
+                basesBob = [...basesAlice];
+            }
+            let indicesIguais = [];
+            let chave = "";
+            for (let i = 0; i < numBits; i++) {
+                if (basesAlice[i] === basesBob[i]) {
+                    indicesIguais.push(i);
+                    chave += bitsAlice[i];
+                }
+            }
+            resultadoDiv.innerHTML += `Bits enviados: ${bitsAlice.join("")}<br>`;
+            resultadoDiv.innerHTML += `Bases de Alice: ${basesAlice.map(b => b === 0 ? "+" : "×").join("")}<br>`;
+            resultadoDiv.innerHTML += `Bases de Bob:   ${basesBob.map(b => b === 0 ? "+" : "×").join("")}<br>`;
+            resultadoDiv.innerHTML += `Índices com mesma base: ${indicesIguais.join(", ")}<br>`;
+            resultadoDiv.innerHTML += `<strong>Chave bruta (apenas bases coincidentes): ${chave}</strong><br>`;
+            if (temEva) {
+                let inconsistente = false;
+                for (let i = 0; i < numBits; i++) {
+                    if (basesAlice[i] !== basesBob[i]) {
+                        inconsistente = true;
+                        break;
+                    }
+                }
+                if (inconsistente) {
+                    resultadoDiv.innerHTML += `<span style="color:red;">⚠️ ALERTA: Possível interceptação detectada! A presença de Eva causou inconsistências. A chave não é segura.</span><br>`;
+                } else {
+                    resultadoDiv.innerHTML += `<span style="color:orange;">❓ Nenhuma anomalia detectada, mas a interceptação pode ter ocorrido sem alterar bits (improvável).</span><br>`;
+                }
+            } else {
+                resultadoDiv.innerHTML += `<span style="color:green;">✅ Chave estabelecida com segurança! Não há evidência de espionagem.</span><br>`;
+            }
+            resultadoDiv.innerHTML += `<em>Na prática, Alice e Bob comparariam um subconjunto das bases para estimar a taxa de erro quântico (QBER). Se QBER > limite, abortam.</em>`;
+        };
+    }
 
     // ================== ALGORITMO DE SHOR (código já existente, mantido) ==================
     function gcd(a, b) { while (b !== 0n) { [a, b] = [b, a % b]; } return a; }
