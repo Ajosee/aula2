@@ -1,128 +1,6 @@
-<!--
-  Copyright (c) 2026 Antonio J.B. Silva
-  SPDX-License-Identifier: GPL-3.0-only
--->
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-// ================== SIMULAÇÃO BB84 ==================
-
-const bb84SimularBtn = document.getElementById("bb84SimularBtn");
-
-if (bb84SimularBtn) {
-
-    bb84SimularBtn.onclick = () => {
-
-        const numBits = parseInt(document.getElementById("bb84Bits").value);
-
-        const temEva = document.getElementById("bb84Eva").checked;
-
-        const resultadoDiv = document.getElementById("bb84Resultado");
-
-        resultadoDiv.innerHTML = "<strong>🔐 Iniciando protocolo BB84...</strong><br>";
-
-        // Simula bases de Alice e Bob (0 = +, 1 = ×)
-
-        const basesAlice = [];
-
-        const bitsAlice = [];
-
-        for (let i = 0; i < numBits; i++) {
-
-            basesAlice.push(Math.random() < 0.5 ? 0 : 1);
-
-            bitsAlice.push(Math.random() < 0.5 ? 0 : 1);
-
-        }
-
-        let basesBob = [];
-
-        if (temEva) {
-
-            // Eva escolhe bases aleatoriamente e pode medir (simples)
-
-            basesBob = basesAlice.map(() => Math.random() < 0.5 ? 0 : 1);
-
-        } else {
-
-            basesBob = [...basesAlice]; // canal honesto, Bob usa mesmas bases
-
-        }
-
-        // Detectar bases iguais
-
-        let indicesIguais = [];
-
-        let chave = "";
-
-        for (let i = 0; i < numBits; i++) {
-
-            if (basesAlice[i] === basesBob[i]) {
-
-                indicesIguais.push(i);
-
-                chave += bitsAlice[i];
-
-            }
-
-        }
-
-        resultadoDiv.innerHTML += `Bits enviados: ${bitsAlice.join("")}<br>`;
-
-        resultadoDiv.innerHTML += `Bases de Alice: ${basesAlice.map(b => b === 0 ? "+" : "×").join("")}<br>`;
-
-        resultadoDiv.innerHTML += `Bases de Bob:   ${basesBob.map(b => b === 0 ? "+" : "×").join("")}<br>`;
-
-        resultadoDiv.innerHTML += `Índices com mesma base: ${indicesIguais.join(", ")}<br>`;
-
-        resultadoDiv.innerHTML += `<strong>Chave bruta (apenas bases coincidentes): ${chave}</strong><br>`;
-
-        if (temEva) {
-
-            // Simula detecção de espionagem: se Bob usa bases diferentes, há chance de inconsistência
-
-            let inconsistente = false;
-
-            for (let i = 0; i < numBits; i++) {
-
-                if (basesAlice[i] !== basesBob[i]) {
-
-                    // Eva pode ter causado erro; considera que um bit foi alterado
-
-                    inconsistente = true;
-
-                    break;
-
-                }
-
-            }
-
-            if (inconsistente) {
-
-                resultadoDiv.innerHTML += `<span style="color:red;">⚠️ ALERTA: Possível interceptação detectada! A presença de Eva causou inconsistências. A chave não é segura.</span><br>`;
-            <div style="margin-top:0.5rem;"><strong>Taxa de Erro Quântico (QBER):</strong> <span id="qberValor" style="font-weight:bold;">calculando...</span></div>
-            <div style="background:#ddd; border-radius:10px; height:12px; width:100%; margin:0.5rem 0;"><div id="qberBar" style="background:#f44336; width:0%; height:100%; border-radius:10px;"></div></div>
-
-            } else {
-
-                resultadoDiv.innerHTML += `<span style="color:orange;">❓ Nenhuma anomalia detectada, mas a interceptação pode ter ocorrido sem alterar bits (improvável).</span><br>`;
-
-            }
-
-        } else {
-
-            resultadoDiv.innerHTML += `<span style="color:green;">✅ Chave estabelecida com segurança! Não há evidência de espionagem.</span><br>`;
-
-        }
-
-        resultadoDiv.innerHTML += `<em>Na prática, Alice e Bob comparariam um subconjunto das bases para estimar a taxa de erro quântico (QBER). Se QBER > limite, abortam.</em>`;
-
-    };
-
-}
-
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Antonio J.B. Silva | Criptografia Pós-Quântica</title>
@@ -201,9 +79,9 @@ if (bb84SimularBtn) {
                         <span class="tec-badge">WebAssembly</span>
                         <span class="tec-badge">Qiskit</span>
                     </div>
-                    <a href="https://github.com/Ajosee" target="_blank" rel="noopener noreferrer" class="btn-projeto">🔗 Ver no GitHub</a>
+                    <a href="#" class="btn-projeto">🔗 Ver no GitHub</a>
                     <div class="links-extras">
-                        <a href="https://www.gov.br/mcti/pt-br/acompanhe-o-mcti/noticias/2026/04/centro-internacional-de-computacao-quantica-no-brasil-sera-um-polo-de-inovacao-e-capacitacao" target="_blank" rel="noopener noreferrer">🔗 Centro Internacional de Computação Quântica (CIQuanta)</a>
+                        <a href="#">🔗 Centro Internacional de Computação Quântica (CIQuanta)</a>
     <a href="simulador.html" target="_blank" rel="noopener noreferrer">🔬 Simulador Interativo (Algoritmo de Shor)</a>
                     </div>
                 </div>
@@ -220,10 +98,10 @@ if (bb84SimularBtn) {
                         <span class="tec-badge">Markdown</span>
                         <span class="tec-badge">LGPD</span>
                     </div>
-                    <a href="https://github.com/Ajosee" target="_blank" rel="noopener noreferrer" class="btn-projeto">🔗 Ver no GitHub</a>
+                    <a href="#" class="btn-projeto">🔗 Ver no GitHub</a>
                     <div class="links-extras">
-                        <a href="https://www.in.gov.br/web/dou/-/instrucao-normativa-iti-n-35-de-30-de-janeiro-de-2026-684841143" target="_blank" rel="noopener noreferrer">📄 Instrução Normativa ITI nº 35/2026 (DOU)</a><br>
-                        <a href="https://www.gov.br/iti/pt-br/assuntos/noticias/indice-de-noticias/iti-publica-instrucao-normativa-que-incorpora-algoritmos-pos-quanticos-a-icp-brasil" target="_blank" rel="noopener noreferrer">🔗 ITI publica incorporação de algoritmos pós-quânticos</a>
+                        <a href="#">📄 Instrução Normativa ITI nº 35/2026 (DOU)</a><br>
+                        <a href="#">🔗 ITI publica incorporação de algoritmos pós-quânticos</a>
                     </div>
                 </div>
             </div>
@@ -238,10 +116,10 @@ if (bb84SimularBtn) {
                         <span class="tec-badge">D3.js</span>
                         <span class="tec-badge">API Gov</span>
                     </div>
-                    <a href="https://github.com/Ajosee" target="_blank" rel="noopener noreferrer" class="btn-projeto">🔗 Ver no GitHub</a>
+                    <a href="#" class="btn-projeto">🔗 Ver no GitHub</a>
                     <div class="links-extras">
                         <a href="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2025/decreto/D12573.htm" target="_blank" rel="noopener noreferrer">⚖️ Decreto nº 12.573/2025 (E-Ciber)</a><br>
-                        <a href="https://www.gov.br/governodigital/pt-br/privacidade-e-seguranca/legislacao-federal" target="_blank" rel="noopener noreferrer">📚 Legislação Federal em Segurança da Informação</a>
+                        <a href="#">📚 Legislação Federal em Segurança da Informação</a>
                     </div>
                 </div>
             </div>
@@ -297,7 +175,7 @@ if (bb84SimularBtn) {
 <footer>
     <p>© 2026 – Antonio J.B. Silva | Verificador de Segurança Pessoal – Era Quântica</p>
     <div class="footer-links">
-        <a href="https://github.com/Ajosee" target="_blank" rel="noopener noreferrer">🔗 GitHub</a> | <a href="javascript:void(0)" style="cursor:pointer;">💼 LinkedIn</a> | <a href="javascript:void(0)" style="cursor:pointer;">📄 Lattes</a> | <a href="mailto:antonio@ajbsilva.tec.br">✉️ antonio@ajbsilva.tec.br</a> | <a href="privacidade.html">🔒 Privacidade (LGPD)</a>
+        <a href="#">🔗 GitHub</a> | <a href="#">💼 LinkedIn</a> | <a href="#">📄 Lattes</a> | <a href="#">✉️ antonio@ajbsilva.tec.br</a> | <a href="privacidade.html">🔒 Privacidade (LGPD)</a>
     </div>
     <div class="credito-frase">
         🛡️ Alinhado à Estratégia Nacional de Cibersegurança (Decreto 12.573/2025)<br>
@@ -308,239 +186,7 @@ if (bb84SimularBtn) {
     <a href="#" class="voltar-topo" id="voltarTopo">↥ Voltar ao topo</a>
 </footer>
 
-// ================== SIMULAÇÃO BB84 ==================
-
-const bb84SimularBtn = document.getElementById("bb84SimularBtn");
-
-if (bb84SimularBtn) {
-
-    bb84SimularBtn.onclick = () => {
-
-        const numBits = parseInt(document.getElementById("bb84Bits").value);
-
-        const temEva = document.getElementById("bb84Eva").checked;
-
-        const resultadoDiv = document.getElementById("bb84Resultado");
-
-        resultadoDiv.innerHTML = "<strong>🔐 Iniciando protocolo BB84...</strong><br>";
-
-        // Simula bases de Alice e Bob (0 = +, 1 = ×)
-
-        const basesAlice = [];
-
-        const bitsAlice = [];
-
-        for (let i = 0; i < numBits; i++) {
-
-            basesAlice.push(Math.random() < 0.5 ? 0 : 1);
-
-            bitsAlice.push(Math.random() < 0.5 ? 0 : 1);
-
-        }
-
-        let basesBob = [];
-
-        if (temEva) {
-
-            // Eva escolhe bases aleatoriamente e pode medir (simples)
-
-            basesBob = basesAlice.map(() => Math.random() < 0.5 ? 0 : 1);
-
-        } else {
-
-            basesBob = [...basesAlice]; // canal honesto, Bob usa mesmas bases
-
-        }
-
-        // Detectar bases iguais
-
-        let indicesIguais = [];
-
-        let chave = "";
-
-        for (let i = 0; i < numBits; i++) {
-
-            if (basesAlice[i] === basesBob[i]) {
-
-                indicesIguais.push(i);
-
-                chave += bitsAlice[i];
-
-            }
-
-        }
-
-        resultadoDiv.innerHTML += `Bits enviados: ${bitsAlice.join("")}<br>`;
-
-        resultadoDiv.innerHTML += `Bases de Alice: ${basesAlice.map(b => b === 0 ? "+" : "×").join("")}<br>`;
-
-        resultadoDiv.innerHTML += `Bases de Bob:   ${basesBob.map(b => b === 0 ? "+" : "×").join("")}<br>`;
-
-        resultadoDiv.innerHTML += `Índices com mesma base: ${indicesIguais.join(", ")}<br>`;
-
-        resultadoDiv.innerHTML += `<strong>Chave bruta (apenas bases coincidentes): ${chave}</strong><br>`;
-
-        if (temEva) {
-
-            // Simula detecção de espionagem: se Bob usa bases diferentes, há chance de inconsistência
-
-            let inconsistente = false;
-
-            for (let i = 0; i < numBits; i++) {
-
-                if (basesAlice[i] !== basesBob[i]) {
-
-                    // Eva pode ter causado erro; considera que um bit foi alterado
-
-                    inconsistente = true;
-
-                    break;
-
-                }
-
-            }
-
-            if (inconsistente) {
-
-                resultadoDiv.innerHTML += `<span style="color:red;">⚠️ ALERTA: Possível interceptação detectada! A presença de Eva causou inconsistências. A chave não é segura.</span><br>`;
-            <div style="margin-top:0.5rem;"><strong>Taxa de Erro Quântico (QBER):</strong> <span id="qberValor" style="font-weight:bold;">calculando...</span></div>
-            <div style="background:#ddd; border-radius:10px; height:12px; width:100%; margin:0.5rem 0;"><div id="qberBar" style="background:#f44336; width:0%; height:100%; border-radius:10px;"></div></div>
-
-            } else {
-
-                resultadoDiv.innerHTML += `<span style="color:orange;">❓ Nenhuma anomalia detectada, mas a interceptação pode ter ocorrido sem alterar bits (improvável).</span><br>`;
-
-            }
-
-        } else {
-
-            resultadoDiv.innerHTML += `<span style="color:green;">✅ Chave estabelecida com segurança! Não há evidência de espionagem.</span><br>`;
-
-        }
-
-        resultadoDiv.innerHTML += `<em>Na prática, Alice e Bob comparariam um subconjunto das bases para estimar a taxa de erro quântico (QBER). Se QBER > limite, abortam.</em>`;
-
-    };
-
-}
-
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-// ================== SIMULAÇÃO BB84 ==================
-
-const bb84SimularBtn = document.getElementById("bb84SimularBtn");
-
-if (bb84SimularBtn) {
-
-    bb84SimularBtn.onclick = () => {
-
-        const numBits = parseInt(document.getElementById("bb84Bits").value);
-
-        const temEva = document.getElementById("bb84Eva").checked;
-
-        const resultadoDiv = document.getElementById("bb84Resultado");
-
-        resultadoDiv.innerHTML = "<strong>🔐 Iniciando protocolo BB84...</strong><br>";
-
-        // Simula bases de Alice e Bob (0 = +, 1 = ×)
-
-        const basesAlice = [];
-
-        const bitsAlice = [];
-
-        for (let i = 0; i < numBits; i++) {
-
-            basesAlice.push(Math.random() < 0.5 ? 0 : 1);
-
-            bitsAlice.push(Math.random() < 0.5 ? 0 : 1);
-
-        }
-
-        let basesBob = [];
-
-        if (temEva) {
-
-            // Eva escolhe bases aleatoriamente e pode medir (simples)
-
-            basesBob = basesAlice.map(() => Math.random() < 0.5 ? 0 : 1);
-
-        } else {
-
-            basesBob = [...basesAlice]; // canal honesto, Bob usa mesmas bases
-
-        }
-
-        // Detectar bases iguais
-
-        let indicesIguais = [];
-
-        let chave = "";
-
-        for (let i = 0; i < numBits; i++) {
-
-            if (basesAlice[i] === basesBob[i]) {
-
-                indicesIguais.push(i);
-
-                chave += bitsAlice[i];
-
-            }
-
-        }
-
-        resultadoDiv.innerHTML += `Bits enviados: ${bitsAlice.join("")}<br>`;
-
-        resultadoDiv.innerHTML += `Bases de Alice: ${basesAlice.map(b => b === 0 ? "+" : "×").join("")}<br>`;
-
-        resultadoDiv.innerHTML += `Bases de Bob:   ${basesBob.map(b => b === 0 ? "+" : "×").join("")}<br>`;
-
-        resultadoDiv.innerHTML += `Índices com mesma base: ${indicesIguais.join(", ")}<br>`;
-
-        resultadoDiv.innerHTML += `<strong>Chave bruta (apenas bases coincidentes): ${chave}</strong><br>`;
-
-        if (temEva) {
-
-            // Simula detecção de espionagem: se Bob usa bases diferentes, há chance de inconsistência
-
-            let inconsistente = false;
-
-            for (let i = 0; i < numBits; i++) {
-
-                if (basesAlice[i] !== basesBob[i]) {
-
-                    // Eva pode ter causado erro; considera que um bit foi alterado
-
-                    inconsistente = true;
-
-                    break;
-
-                }
-
-            }
-
-            if (inconsistente) {
-
-                resultadoDiv.innerHTML += `<span style="color:red;">⚠️ ALERTA: Possível interceptação detectada! A presença de Eva causou inconsistências. A chave não é segura.</span><br>`;
-            <div style="margin-top:0.5rem;"><strong>Taxa de Erro Quântico (QBER):</strong> <span id="qberValor" style="font-weight:bold;">calculando...</span></div>
-            <div style="background:#ddd; border-radius:10px; height:12px; width:100%; margin:0.5rem 0;"><div id="qberBar" style="background:#f44336; width:0%; height:100%; border-radius:10px;"></div></div>
-
-            } else {
-
-                resultadoDiv.innerHTML += `<span style="color:orange;">❓ Nenhuma anomalia detectada, mas a interceptação pode ter ocorrido sem alterar bits (improvável).</span><br>`;
-
-            }
-
-        } else {
-
-            resultadoDiv.innerHTML += `<span style="color:green;">✅ Chave estabelecida com segurança! Não há evidência de espionagem.</span><br>`;
-
-        }
-
-        resultadoDiv.innerHTML += `<em>Na prática, Alice e Bob comparariam um subconjunto das bases para estimar a taxa de erro quântico (QBER). Se QBER > limite, abortam.</em>`;
-
-    };
-
-}
-
+<script src="script.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
