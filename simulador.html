@@ -274,7 +274,7 @@
                 if (qber > 11) {
                     resultadoDiv.innerHTML += `<span style="color:orange;">⚠️ Atenção: QBER elevado (${qber.toFixed(2)}%) em canal honesto (improvável). Pode ser ruído – repita a transmissão.</span><br>`;
                 } else {
-                    resultadoDiv.innerHTML += `<span style="color:green;">✅ Chave estabelecida com segurança! Baixo QBER (${qber.toFixed(2)}%).</span><br>`;
+                    resultadoDiv.innerHTML += `<span style="color:green;">✅ Chave establecida com segurança! Baixo QBER (${qber.toFixed(2)}%).</span><br>`;
                 }
             }
             resultadoDiv.innerHTML += `<em>Na prática, Alice e Bob comparariam um subconjunto das bases para estimar o QBER. Se QBER > limite, abortam.</em>`;
