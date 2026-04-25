@@ -1,0 +1,425 @@
+<!--
+  Copyright (c) 2026 Antonio J.B. Silva
+  SPDX-License-Identifier: GPL-3.0-only
+-->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚛️ Simulador Quântico Avançado: Shor + Grover + Ameaça + Defesa</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .simulador-container { max-width: 1000px; margin: 2rem auto; padding: 2rem; background: var(--card-bg, white); border-radius: 24px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .tabs { display: flex; gap: 1rem; border-bottom: 2px solid #ccc; margin-bottom: 2rem; }
+        .tab-btn { background: none; border: none; padding: 0.8rem 1.5rem; font-weight: bold; cursor: pointer; color: var(--text-primary, #1a2a3a); }
+        .tab-btn.active { color: #4caf50; border-bottom: 3px solid #4caf50; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        button { background-color: #0a2b3e; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 40px; font-weight: 600; cursor: pointer; transition: 0.3s; margin-right: 1rem; margin-top: 1rem; }
+        button:hover { background-color: #4caf50; }
+        .input-group { margin: 1.5rem 0; }
+        .input-group input, .input-group select { width: 100%; padding: 0.8rem; border-radius: 12px; border: 2px solid var(--border-light, #e2e8f0); background: var(--card-bg, white); color: var(--text-primary, #1a2a3a); }
+        .resultado { margin-top: 2rem; padding: 1rem; background: var(--pergunta-bg, #f9f9fc); border-radius: 16px; font-family: monospace; white-space: pre-wrap; }
+        .passos { margin-top: 1rem; background: #f0f0f0; padding: 1rem; border-radius: 12px; max-height: 300px; overflow-y: auto; font-size: 0.9rem; }
+        .prob { margin-top: 1rem; background: #e0f0e0; padding: 0.8rem; border-radius: 12px; font-weight: bold; text-align: center; }
+        .frase-final { margin-top: 1.5rem; font-style: italic; border-left: 4px solid #ff8c00; padding: 1rem; background: #fff0e0; }
+        .warn { color: #e67e22; font-size: 0.9rem; margin-top: 0.5rem; }
+        .progress-bar-container { width: 100%; background: #ddd; border-radius: 20px; margin: 1rem 0; height: 20px; overflow: hidden; }
+        .progress-bar { width: 0%; height: 100%; background: #4caf50; transition: width 0.3s; }
+        .checklist { text-align: left; margin: 1rem 0; }
+        .checklist label { display: block; margin: 0.5rem 0; }
+        .qber-container { margin-top: 0.5rem; background: #f5f5f5; padding: 0.5rem; border-radius: 12px; }
+        .qber-bar { width: 100%; background: #ddd; border-radius: 20px; height: 12px; overflow: hidden; margin-top: 5px; }
+        .qber-fill { width: 0%; height: 100%; background: #4caf50; transition: width 0.3s; }
+        /* tooltip simples via título */
+        [title] { cursor: help; border-bottom: 1px dotted #4caf50; }
+    </style>
+</head>
+<body>
+<header>
+    <div class="logo"><span>⚛️</span> A.J.B. Silva</div>
+    <nav><ul><li><a href="index.html">← Voltar ao Verificador</a></li></ul></nav>
+</header>
+<main>
+<div class="simulador-container">
+    <h1>⚛️ Simulador de Ataques Quânticos</h1>
+    <p>Demonstração educacional de algoritmos quânticos e da ameaça/defesa na era quântica.</p>
+
+    <div class="tabs">
+        <button id="tabShorBtn" class="tab-btn active" title="Algoritmo de Shor quebra a criptografia RSA fatorando números grandes">🔑 Fatoração RSA (Shor)</button>
+        <button id="tabGroverBtn" class="tab-btn" title="Algoritmo de Grover acelera a busca por senhas, reduzindo a segurança efetiva pela metade">🔐 Quebra de Senhas (Grover)</button>
+        <button id="tabThreatBtn" class="tab-btn" title="Ameaças quânticas e estratégias de defesa (Kyber, BB84, Q-Day)">⏳ Ameaça & Defesa</button>
+    </div>
+
+    <!-- ABA SHOR -->
+    <div id="shorContent" class="tab-content active">
+        <h2>Algoritmo de Shor – Quebra de Criptografia RSA</h2>
+        <p>Fatoração de números compostos (produto de dois primos). O computador quântico resolve esse problema em tempo polinomial.</p>
+        <div class="input-group">
+            <label>Número a fatorar (N):</label>
+            <input type="number" id="numeroShor" value="15" step="1" min="3">
+            <div class="warn" id="warnShor"></div>
+        </div>
+        <button id="fatorarBtn" title="Executa o algoritmo de Shor (simulação probabilística)">⚛️ Iniciar Ataque Quântico (Shor)</button>
+        <button id="aleatorioShorBtn" title="Escolhe um número aleatório entre 3 e 1.000.000">🎲 Número Aleatório</button>
+        <div id="resultadoShor" class="resultado"><strong>Resultado:</strong> Aguardando...</div>
+        <div class="progress-bar-container"><div id="progressShor" class="progress-bar"></div></div>
+        <div id="logShor" class="passos"><strong>Log do algoritmo:</strong><br>Aguardando início.</div>
+        <div id="probShor" class="prob" style="display:none;"></div>
+        <div id="fraseShor" class="frase-final" style="display:none;"></div>
+    </div>
+
+    <!-- ABA GROVER -->
+    <div id="groverContent" class="tab-content">
+        <h2>Algoritmo de Grover – Busca Quântica / Quebra de Senhas</h2>
+        <p>Simula a aceleração quadrática na busca por uma senha. O espaço de busca total é gigantesco, mas a aceleração quântica reduz drasticamente o número de tentativas.</p>
+        <div class="input-group">
+            <label>Defina a senha (até 50 caracteres, letras/números/símbolos):</label>
+            <input type="text" id="senhaGrover" maxlength="50" placeholder="Ex: P@ssw0rd!Segura">
+        </div>
+        <button id="quebrarSenhaBtn" title="Simula o ataque de Grover – aceleração quadrática na busca">🔍 Simular Ataque Quântico (Grover)</button>
+        <button id="aleatorioSenhaBtn" title="Gera uma senha aleatória de 6 a 17 caracteres">🎲 Gerar Senha Aleatória</button>
+        <div id="resultadoGrover" class="resultado"><strong>Resultado:</strong> Aguardando...</div>
+        <div class="progress-bar-container"><div id="progressGrover" class="progress-bar"></div></div>
+        <div id="logGrover" class="passos"><strong>Log da busca quântica:</strong><br>Aguardando início.</div>
+        <div id="fraseGrover" class="frase-final" style="display:none;"></div>
+    </div>
+
+    <!-- ABA AMEAÇA & DEFESA -->
+    <div id="threatContent" class="tab-content">
+        <h2>⏳ Ameaça Quântica – Q-Day e Estratégias de Defesa</h2>
+        <div id="qdayCountdown" style="text-align:center; font-size:1.2rem; background:#e0e7ff; padding:1rem; border-radius:20px; margin-bottom:1rem;">
+            <strong>Estimativa para o Q-Day:</strong> <span id="countdown">calculando...</span>
+        </div>
+        <div class="input-group">
+            <label>Impacto do Grover no AES (bits da chave):</label>
+            <input type="number" id="aesBits" value="256" step="8" min="8" max="256">
+            <button id="calcularAesBtn" title="Mostra a redução de segurança causada por Grover no AES">Calcular esforço quântico</button>
+        </div>
+        <div id="resultadoAes" class="resultado">Clique em "Calcular" para ver a redução de segurança</div>
+        <div class="checklist">
+            <h3>🎯 Auditor de Resiliência Quântica (simples)</h3>
+            <label><input type="checkbox" id="ck1"> Minha empresa utiliza criptografia pós‑quântica (PQC) onde disponível.</label>
+            <label><input type="checkbox" id="ck2"> Mantenho backups criptografados e imutáveis para dados sensíveis.</label>
+            <label><input type="checkbox" id="ck3"> Já mapeei quais sistemas usam RSA ou ECC.</label>
+            <label><input type="checkbox" id="ck4"> Acompanho as recomendações do NIST e ITI para migração pós‑quântica.</label>
+            <label><input type="checkbox" id="ck5"> Realizo simulações de risco quântico periodicamente.</label>
+            <button id="auditarBtn" title="Calcula a pontuação de resiliência quântica com base nas respostas">📊 Gerar pontuação de resiliência</button>
+            <div id="resultadoAudit" class="prob" style="margin-top:1rem; display:none;"></div>
+        </div>
+        <div style="margin-top:2rem; border-top:2px solid #ccc; padding-top:1rem;">
+            <h3>🔐 Simulação de Criptografia Pós‑Quântica (Kyber / ML-KEM)</h3>
+            <p>Kyber é um algoritmo de encapsulamento de chaves seguro contra computadores quânticos. Diferente do RSA/ECC, ele não é quebrado por Shor ou Grover.</p>
+            <button id="gerarKyberBtn" title="Gera um par de chaves simulado (apenas ilustração)">⚛️ Gerar par de chaves pós‑quânticas</button>
+            <div id="kyberResultado" class="resultado" style="margin-top:1rem;">Clique no botão para ver a simulação.</div>
+        </div>
+        <div style="margin-top:2rem; border-top:2px solid #ccc; padding-top:1rem;">
+            <h3>🔐 Distribuição Quântica de Chaves (BB84) – Simulação</h3>
+            <p>Alice envia qubits para Bob através de um canal quântico. Eva pode tentar interceptar, mas a mecânica quântica a denuncia.</p>
+            <div class="input-group">
+                <label>Número de bits a serem transmitidos:</label>
+                <input type="number" id="bb84Bits" value="8" min="4" max="20" step="2">
+            </div>
+            <label><input type="checkbox" id="bb84Eva"> 🕵️‍♂️ Ativar interceptação de Eva (espionagem)</label>
+            <button id="bb84SimularBtn" title="Executa o protocolo BB84 e calcula a taxa de erro quântico (QBER)">⚛️ Iniciar BB84</button>
+            <div id="bb84Resultado" class="resultado" style="margin-top:1rem;">Clique no botão para simular a troca de chaves.</div>
+            <div id="qberDisplay" class="qber-container" style="display:none;">
+                <strong>Taxa de Erro Quântico (QBER):</strong> <span id="qberValue">0</span>%
+                <div class="qber-bar"><div id="qberFill" class="qber-fill"></div></div>
+                <small>Limite típico de segurança: ≤ 11%</small>
+            </div>
+        </div>
+        <div class="frase-final" style="margin-top:1rem;">
+            💡 <strong>Harvest Now, Decrypt Later:</strong> Dados criptografados hoje podem ser armazenados e decifrados por um computador quântico no futuro. A migração para criptografia pós‑quântica deve começar agora.
+        </div>
+    </div>
+</div>
+</main>
+<footer style="text-align:center; margin:2rem;">
+    <p>© 2026 – Antonio J.B. Silva | Simulações educacionais dos algoritmos Shor, Grover e ameaças quânticas</p>
+</footer>
+
+<script>
+    // ================== UTILITÁRIOS ==================
+    function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+    function logMessage(divId, msg) {
+        const div = document.getElementById(divId);
+        const p = document.createElement('div');
+        p.innerHTML = `> ${msg}`;
+        div.appendChild(p);
+        div.scrollTop = div.scrollHeight;
+    }
+    function clearLog(divId) {
+        const div = document.getElementById(divId);
+        div.innerHTML = `<strong>${divId === 'logShor' ? 'Log do algoritmo:' : divId === 'logGrover' ? 'Log da busca quântica:' : 'Log:'}</strong><br>Aguardando início.`;
+    }
+    function updateProgress(id, percent) { document.getElementById(id).style.width = `${percent}%`; }
+
+    // ================== CONTADOR Q-DAY ==================
+    const alvoQDay = new Date(2036, 0, 1);
+    function atualizarCountdown() {
+        const agora = new Date();
+        const diff = alvoQDay - agora;
+        if (diff <= 0) {
+            document.getElementById('countdown').innerText = "JÁ OCORREU (ou está muito próximo)";
+            return;
+        }
+        const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const horas = Math.floor((diff % (86400000)) / (3600000));
+        const minutos = Math.floor((diff % 3600000) / 60000);
+        document.getElementById('countdown').innerText = `${dias} dias, ${horas} horas, ${minutos} minutos`;
+    }
+    atualizarCountdown();
+    setInterval(atualizarCountdown, 60000);
+
+    // ================== AES / GROVER (SIMULAÇÃO) ==================
+    const calcularAesBtn = document.getElementById('calcularAesBtn');
+    const resultadoAes = document.getElementById('resultadoAes');
+    calcularAesBtn.onclick = () => {
+        let bits = parseInt(document.getElementById('aesBits').value);
+        if (isNaN(bits)) bits = 256;
+        const tentativasClassicas = Math.pow(2, bits-1);
+        const tentativasQuanticas = Math.pow(2, bits/2);
+        resultadoAes.innerHTML = `<strong>🔐 AES-${bits}</strong><br>
+        🔍 Força bruta clássica (média): 2^${bits-1} tentativas ≈ ${tentativasClassicas.toExponential(2)}<br>
+        ⚛️ Com algoritmo de Grover: 2^${bits/2} tentativas ≈ ${tentativasQuanticas.toExponential(2)}<br>
+        🚀 Aceleração quântica: √N = ${Math.sqrt(tentativasClassicas).toExponential(2)} tentativas.<br>
+        <em>Na prática, um computador quântico reduziria a segurança efetiva pela metade dos bits.</em>`;
+    };
+
+    // ================== AUDITOR DE RESILIÊNCIA ==================
+    const auditarBtn = document.getElementById('auditarBtn');
+    const resultadoAudit = document.getElementById('resultadoAudit');
+    auditarBtn.onclick = () => {
+        let score = 0;
+        if (document.getElementById('ck1').checked) score += 20;
+        if (document.getElementById('ck2').checked) score += 20;
+        if (document.getElementById('ck3').checked) score += 20;
+        if (document.getElementById('ck4').checked) score += 20;
+        if (document.getElementById('ck5').checked) score += 20;
+        resultadoAudit.style.display = 'block';
+        resultadoAudit.innerHTML = `<strong>📊 Pontuação de Resiliência Quântica: ${score}/100</strong><br>`;
+        if (score >= 80) resultadoAudit.innerHTML += "✅ Excelente! Sua organização está muito bem preparada.";
+        else if (score >= 50) resultadoAudit.innerHTML += "⚠️ Bom, mas há margem significativa para melhoria. Revise as recomendações.";
+        else resultadoAudit.innerHTML += "❌ Atenção! Sua organização está vulnerável. Inicie imediatamente um plano de migração pós‑quântica.";
+    };
+
+    // ================== KYBER (SIMULAÇÃO) ==================
+    const gerarKyberBtn = document.getElementById('gerarKyberBtn');
+    if (gerarKyberBtn) {
+        gerarKyberBtn.onclick = () => {
+            const kyberResultado = document.getElementById("kyberResultado");
+            kyberResultado.innerHTML = "<strong>⚛️ Gerando chaves pós‑quânticas (simulação)...</strong><br>";
+            setTimeout(() => {
+                const chavePublica = "kyber_pub_" + Math.random().toString(36).substring(2, 15);
+                const chavePrivada = "kyber_priv_" + Math.random().toString(36).substring(2, 15);
+                kyberResultado.innerHTML += `✅ <strong>Chave pública simulada:</strong> ${chavePublica}<br>`;
+                kyberResultado.innerHTML += `🔒 <strong>Chave privada simulada:</strong> ${chavePrivada}<br>`;
+                kyberResultado.innerHTML += `<em>Em um ambiente real, o Kyber usaria álgebra de módulos e resistiria a ataques quânticos, ao contrário do RSA/ECC.</em>`;
+            }, 500);
+        };
+    }
+
+    // ================== BB84 (SIMULAÇÃO) ==================
+    const bb84SimularBtn = document.getElementById('bb84SimularBtn');
+    if (bb84SimularBtn) {
+        bb84SimularBtn.onclick = () => {
+            const numBits = parseInt(document.getElementById("bb84Bits").value);
+            const temEva = document.getElementById("bb84Eva").checked;
+            const resultadoDiv = document.getElementById("bb84Resultado");
+            const qberDisplay = document.getElementById("qberDisplay");
+            const qberValueSpan = document.getElementById("qberValue");
+            const qberFillDiv = document.getElementById("qberFill");
+            resultadoDiv.innerHTML = "<strong>🔐 Iniciando protocolo BB84...</strong><br>";
+            qberDisplay.style.display = "none";
+            const basesAlice = [];
+            const bitsAlice = [];
+            for (let i = 0; i < numBits; i++) {
+                basesAlice.push(Math.random() < 0.5 ? 0 : 1);
+                bitsAlice.push(Math.random() < 0.5 ? 0 : 1);
+            }
+            let basesBob = [];
+            if (temEva) {
+                basesBob = basesAlice.map(() => Math.random() < 0.5 ? 0 : 1);
+            } else {
+                basesBob = [...basesAlice];
+            }
+            let indicesIguais = [];
+            let chave = "";
+            for (let i = 0; i < numBits; i++) {
+                if (basesAlice[i] === basesBob[i]) {
+                    indicesIguais.push(i);
+                    chave += bitsAlice[i];
+                }
+            }
+            let discordantes = 0;
+            for (let i = 0; i < numBits; i++) {
+                if (basesAlice[i] !== basesBob[i]) discordantes++;
+            }
+            const qber = (discordantes / numBits) * 100;
+            qberValueSpan.innerText = qber.toFixed(2);
+            qberFillDiv.style.width = qber + "%";
+            if (qber > 11) qberFillDiv.style.backgroundColor = "#f44336";
+            else qberFillDiv.style.backgroundColor = "#4caf50";
+            qberDisplay.style.display = "block";
+            resultadoDiv.innerHTML += `Bits enviados: ${bitsAlice.join("")}<br>`;
+            resultadoDiv.innerHTML += `Bases de Alice: ${basesAlice.map(b => b === 0 ? "+" : "×").join("")}<br>`;
+            resultadoDiv.innerHTML += `Bases de Bob:   ${basesBob.map(b => b === 0 ? "+" : "×").join("")}<br>`;
+            resultadoDiv.innerHTML += `Índices com mesma base: ${indicesIguais.join(", ")}<br>`;
+            resultadoDiv.innerHTML += `<strong>Chave bruta (apenas bases coincidentes): ${chave}</strong><br>`;
+            resultadoDiv.innerHTML += `<strong>Taxa de Erro Quântico (QBER): ${qber.toFixed(2)}%</strong><br>`;
+            if (temEva) {
+                if (qber > 11) {
+                    resultadoDiv.innerHTML += `<span style="color:red;">⚠️ ALERTA: QBER alto (${qber.toFixed(2)}%) → possível interceptação detectada! A chave não é segura.</span><br>`;
+                } else {
+                    resultadoDiv.innerHTML += `<span style="color:orange;">❓ Nenhuma anomalia significativa, mas a interceptação pode ter ocorrido sem alterar bits (improvável).</span><br>`;
+                }
+            } else {
+                if (qber > 11) {
+                    resultadoDiv.innerHTML += `<span style="color:orange;">⚠️ Atenção: QBER elevado (${qber.toFixed(2)}%) em canal honesto (improvável). Pode ser ruído – repita a transmissão.</span><br>`;
+                } else {
+                    resultadoDiv.innerHTML += `<span style="color:green;">✅ Chave estabelecida com segurança! Baixo QBER (${qber.toFixed(2)}%).</span><br>`;
+                }
+            }
+            resultadoDiv.innerHTML += `<em>Na prática, Alice e Bob comparariam um subconjunto das bases para estimar o QBER. Se QBER > limite, abortam.</em>`;
+        };
+    }
+
+    // ================== ALGORITMO DE SHOR ==================
+    function gcd(a, b) { while (b !== 0n) { [a, b] = [b, a % b]; } return a; }
+    async function shorFactor(N, maxAttempts = 12) {
+        if (N < 2n) return null;
+        if (N % 2n === 0n) return 2n;
+        for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+            const a = BigInt(Math.floor(Math.random() * Number(N - 2n))) + 2n;
+            logMessage('logShor', `Tentativa ${attempt}: a = ${a}`);
+            updateProgress('progressShor', (attempt / maxAttempts) * 100);
+            let r = 1n;
+            let power = a;
+            for (let i = 1n; i <= N; i++) {
+                power = (power * a) % N;
+                if (power === 1n) { r = i + 1n; break; }
+            }
+            logMessage('logShor', `Ordem encontrada: r = ${r}`);
+            if (r % 2n === 0n) {
+                let x = 1n;
+                for (let i = 0n; i < r/2n; i++) x = (x * a) % N;
+                const candidate = (x + 1n) % N;
+                const d = gcd(candidate, N);
+                if (d > 1n && d < N) return d;
+            }
+            await delay(300);
+        }
+        return null;
+    }
+    const numeroShor = document.getElementById('numeroShor');
+    const fatorarBtn = document.getElementById('fatorarBtn');
+    const aleatorioShor = document.getElementById('aleatorioShorBtn');
+    const resultadoShor = document.getElementById('resultadoShor');
+    const warnShor = document.getElementById('warnShor');
+    aleatorioShor.onclick = () => {
+        const max = 1000000;
+        const num = Math.floor(Math.random() * (max - 3 + 1)) + 3;
+        numeroShor.value = num;
+        warnShor.innerText = '';
+    };
+    fatorarBtn.onclick = async () => {
+        let N = BigInt(parseInt(numeroShor.value));
+        if (N < 2n) { alert("Número maior que 1"); return; }
+        if (N > 1000000n) { warnShor.innerText = "Número muito grande pode tornar a simulação lenta. Recomendado até 10.000."; await delay(500); } else warnShor.innerText = '';
+        clearLog('logShor');
+        resultadoShor.innerHTML = '<strong>Resultado:</strong> Executando ataque quântico...';
+        document.getElementById('probShor').style.display = 'none';
+        document.getElementById('fraseShor').style.display = 'none';
+        updateProgress('progressShor', 0);
+        logMessage('logShor', `Iniciando fatoração de N = ${N}`);
+        const start = performance.now();
+        const factor = await shorFactor(N);
+        const elapsed = (performance.now() - start).toFixed(2);
+        if (factor && factor !== 1n && factor !== N) {
+            const outro = N / factor;
+            resultadoShor.innerHTML = `<strong>✅ ATAQUE BEM‑SUCEDIDO!</strong><br>N = ${N}<br>Fator 1: ${factor}<br>Fator 2: ${outro}<br>Tempo simulado: ${elapsed} ms<br>🚀 Em um computador quântico, isso levaria microssegundos.`;
+            const probDiv = document.getElementById('probShor');
+            probDiv.style.display = 'block';
+            probDiv.innerHTML = `🧪 Probabilidade de sucesso após tentativas: alta.`;
+            const fraseDiv = document.getElementById('fraseShor');
+            fraseDiv.style.display = 'block';
+            fraseDiv.innerHTML = `💡 RSA é inseguro contra computadores quânticos poderosos. A transição para criptografia pós-quântica é urgente.`;
+        } else {
+            resultadoShor.innerHTML = `<strong>❌ Falha na fatoração.</strong><br>Não foi possível fatorar ${N} com as tentativas realizadas. O algoritmo de Shor é probabilístico; tente novamente.`;
+            const fraseDiv = document.getElementById('fraseShor');
+            fraseDiv.style.display = 'block';
+            fraseDiv.innerHTML = `🤔 Dica: números pequenos (ex: 15, 21, 35) têm maior chance de sucesso.`;
+        }
+        updateProgress('progressShor', 100);
+    };
+
+    // ================== ALGORITMO DE GROVER ==================
+    const senhaGrover = document.getElementById('senhaGrover');
+    const quebrarSenha = document.getElementById('quebrarSenhaBtn');
+    const aleatorioSenha = document.getElementById('aleatorioSenhaBtn');
+    const resultadoGrover = document.getElementById('resultadoGrover');
+    const logGroverDiv = document.getElementById('logGrover');
+    const fraseGrover = document.getElementById('fraseGrover');
+    function gerarSenhaAleatoria() {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+[]{}|;:,.<>?';
+        let senha = '';
+        const comprimento = Math.floor(Math.random() * 12) + 6;
+        for (let i = 0; i < comprimento; i++) senha += chars[Math.floor(Math.random() * chars.length)];
+        return senha;
+    }
+    aleatorioSenha.onclick = () => { senhaGrover.value = gerarSenhaAleatoria(); };
+    quebrarSenha.onclick = async () => {
+        const senha = senhaGrover.value.trim();
+        if (senha === "") { alert("Digite uma senha ou gere uma aleatória."); return; }
+        if (senha.length > 50) { alert("Máximo 50 caracteres."); return; }
+        clearLog('logGrover');
+        resultadoGrover.innerHTML = '<strong>Resultado:</strong> Executando busca quântica conceitual...';
+        fraseGrover.style.display = 'none';
+        updateProgress('progressGrover', 0);
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+[]{}|;:,.<>?';
+        const tamanhoEspaco = Math.pow(chars.length, senha.length);
+        const tentativasClassicas = Math.floor(tamanhoEspaco / 2);
+        const tentativasQuanticas = Math.ceil(Math.sqrt(tamanhoEspaco));
+        logMessage('logGrover', `Senha alvo: "${senha}" (comprimento = ${senha.length})`);
+        logMessage('logGrover', `Espaço de busca total: ${tamanhoEspaco.toExponential(2)} combinações.`);
+        logMessage('logGrover', `Tentativas clássicas (média): ${tentativasClassicas.toExponential(2)}`);
+        logMessage('logGrover', `Tentativas com Grover: ${tentativasQuanticas.toExponential(2)} (aceleração quadrática)`);
+        for (let i = 1; i <= 5; i++) {
+            await delay(400);
+            logMessage('logGrover', `Iteração quântica simulada ${i}/5...`);
+            updateProgress('progressGrover', (i / 5) * 100);
+        }
+        updateProgress('progressGrover', 100);
+        resultadoGrover.innerHTML = `<strong>✅ SENHA DESCOBERTA (SIMULAÇÃO)!</strong><br>
+        Senha: ${senha}<br>
+        <strong>Conceito de Grover:</strong> Um computador quântico precisaria de ≈ ${tentativasQuanticas.toExponential(2)} tentativas, enquanto o clássico precisaria de ≈ ${tentativasClassicas.toExponential(2)}.<br>
+        🚀 Isso demonstra a aceleração quadrática do algoritmo de Grover. Para senhas longas, a vantagem quântica é astronômica.`;
+        fraseGrover.style.display = 'block';
+        fraseGrover.innerHTML = `🔐 <strong>Implicação prática:</strong> Senhas comuns (curtas) seriam quebradas rapidamente por um computador quântico com Grover. Para manter segurança, recomenda‑se dobrar o comprimento da senha ou usar criptografia pós‑quântica.`;
+    };
+
+    // TABS
+    const tabShor = document.getElementById('tabShorBtn');
+    const tabGrover = document.getElementById('tabGroverBtn');
+    const tabThreat = document.getElementById('tabThreatBtn');
+    const shorContent = document.getElementById('shorContent');
+    const groverContent = document.getElementById('groverContent');
+    const threatContent = document.getElementById('threatContent');
+    tabShor.onclick = () => {
+        tabShor.classList.add('active'); tabGrover.classList.remove('active'); tabThreat.classList.remove('active');
+        shorContent.classList.add('active'); groverContent.classList.remove('active'); threatContent.classList.remove('active');
+    };
+    tabGrover.onclick = () => {
+        tabGrover.classList.add('active'); tabShor.classList.remove('active'); tabThreat.classList.remove('active');
+        groverContent.classList.add('active'); shorContent.classList.remove('active'); threatContent.classList.remove('active');
+    };
+    tabThreat.onclick = () => {
+        tabThreat.classList.add('active'); tabShor.classList.remove('active'); tabGrover.classList.remove('active');
+        threatContent.classList.add('active'); shorContent.classList.remove('active'); groverContent.classList.remove('active');
+    };
+</script>
+</body>
+</html>
