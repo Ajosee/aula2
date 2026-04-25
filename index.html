@@ -1,6 +1,127 @@
+<!--
+  Copyright (c) 2026 Antonio J.B. Silva
+  SPDX-License-Identifier: GPL-3.0-only
+-->
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+// ================== SIMULAÇÃO BB84 ==================
+
+const bb84SimularBtn = document.getElementById("bb84SimularBtn");
+
+if (bb84SimularBtn) {
+
+    bb84SimularBtn.onclick = () => {
+
+        const numBits = parseInt(document.getElementById("bb84Bits").value);
+
+        const temEva = document.getElementById("bb84Eva").checked;
+
+        const resultadoDiv = document.getElementById("bb84Resultado");
+
+        resultadoDiv.innerHTML = "<strong>🔐 Iniciando protocolo BB84...</strong><br>";
+
+        // Simula bases de Alice e Bob (0 = +, 1 = ×)
+
+        const basesAlice = [];
+
+        const bitsAlice = [];
+
+        for (let i = 0; i < numBits; i++) {
+
+            basesAlice.push(Math.random() < 0.5 ? 0 : 1);
+
+            bitsAlice.push(Math.random() < 0.5 ? 0 : 1);
+
+        }
+
+        let basesBob = [];
+
+        if (temEva) {
+
+            // Eva escolhe bases aleatoriamente e pode medir (simples)
+
+            basesBob = basesAlice.map(() => Math.random() < 0.5 ? 0 : 1);
+
+        } else {
+
+            basesBob = [...basesAlice]; // canal honesto, Bob usa mesmas bases
+
+        }
+
+        // Detectar bases iguais
+
+        let indicesIguais = [];
+
+        let chave = "";
+
+        for (let i = 0; i < numBits; i++) {
+
+            if (basesAlice[i] === basesBob[i]) {
+
+                indicesIguais.push(i);
+
+                chave += bitsAlice[i];
+
+            }
+
+        }
+
+        resultadoDiv.innerHTML += `Bits enviados: ${bitsAlice.join("")}<br>`;
+
+        resultadoDiv.innerHTML += `Bases de Alice: ${basesAlice.map(b => b === 0 ? "+" : "×").join("")}<br>`;
+
+        resultadoDiv.innerHTML += `Bases de Bob:   ${basesBob.map(b => b === 0 ? "+" : "×").join("")}<br>`;
+
+        resultadoDiv.innerHTML += `Índices com mesma base: ${indicesIguais.join(", ")}<br>`;
+
+        resultadoDiv.innerHTML += `<strong>Chave bruta (apenas bases coincidentes): ${chave}</strong><br>`;
+
+        if (temEva) {
+
+            // Simula detecção de espionagem: se Bob usa bases diferentes, há chance de inconsistência
+
+            let inconsistente = false;
+
+            for (let i = 0; i < numBits; i++) {
+
+                if (basesAlice[i] !== basesBob[i]) {
+
+                    // Eva pode ter causado erro; considera que um bit foi alterado
+
+                    inconsistente = true;
+
+                    break;
+
+                }
+
+            }
+
+            if (inconsistente) {
+
+                resultadoDiv.innerHTML += `<span style="color:red;">⚠️ ALERTA: Possível interceptação detectada! A presença de Eva causou inconsistências. A chave não é segura.</span><br>`;
+            <div style="margin-top:0.5rem;"><strong>Taxa de Erro Quântico (QBER):</strong> <span id="qberValor" style="font-weight:bold;">calculando...</span></div>
+            <div style="background:#ddd; border-radius:10px; height:12px; width:100%; margin:0.5rem 0;"><div id="qberBar" style="background:#f44336; width:0%; height:100%; border-radius:10px;"></div></div>
+
+            } else {
+
+                resultadoDiv.innerHTML += `<span style="color:orange;">❓ Nenhuma anomalia detectada, mas a interceptação pode ter ocorrido sem alterar bits (improvável).</span><br>`;
+
+            }
+
+        } else {
+
+            resultadoDiv.innerHTML += `<span style="color:green;">✅ Chave estabelecida com segurança! Não há evidência de espionagem.</span><br>`;
+
+        }
+
+        resultadoDiv.innerHTML += `<em>Na prática, Alice e Bob comparariam um subconjunto das bases para estimar a taxa de erro quântico (QBER). Se QBER > limite, abortam.</em>`;
+
+    };
+
+}
+
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
@@ -187,7 +308,239 @@
     <a href="#" class="voltar-topo" id="voltarTopo">↥ Voltar ao topo</a>
 </footer>
 
+// ================== SIMULAÇÃO BB84 ==================
+
+const bb84SimularBtn = document.getElementById("bb84SimularBtn");
+
+if (bb84SimularBtn) {
+
+    bb84SimularBtn.onclick = () => {
+
+        const numBits = parseInt(document.getElementById("bb84Bits").value);
+
+        const temEva = document.getElementById("bb84Eva").checked;
+
+        const resultadoDiv = document.getElementById("bb84Resultado");
+
+        resultadoDiv.innerHTML = "<strong>🔐 Iniciando protocolo BB84...</strong><br>";
+
+        // Simula bases de Alice e Bob (0 = +, 1 = ×)
+
+        const basesAlice = [];
+
+        const bitsAlice = [];
+
+        for (let i = 0; i < numBits; i++) {
+
+            basesAlice.push(Math.random() < 0.5 ? 0 : 1);
+
+            bitsAlice.push(Math.random() < 0.5 ? 0 : 1);
+
+        }
+
+        let basesBob = [];
+
+        if (temEva) {
+
+            // Eva escolhe bases aleatoriamente e pode medir (simples)
+
+            basesBob = basesAlice.map(() => Math.random() < 0.5 ? 0 : 1);
+
+        } else {
+
+            basesBob = [...basesAlice]; // canal honesto, Bob usa mesmas bases
+
+        }
+
+        // Detectar bases iguais
+
+        let indicesIguais = [];
+
+        let chave = "";
+
+        for (let i = 0; i < numBits; i++) {
+
+            if (basesAlice[i] === basesBob[i]) {
+
+                indicesIguais.push(i);
+
+                chave += bitsAlice[i];
+
+            }
+
+        }
+
+        resultadoDiv.innerHTML += `Bits enviados: ${bitsAlice.join("")}<br>`;
+
+        resultadoDiv.innerHTML += `Bases de Alice: ${basesAlice.map(b => b === 0 ? "+" : "×").join("")}<br>`;
+
+        resultadoDiv.innerHTML += `Bases de Bob:   ${basesBob.map(b => b === 0 ? "+" : "×").join("")}<br>`;
+
+        resultadoDiv.innerHTML += `Índices com mesma base: ${indicesIguais.join(", ")}<br>`;
+
+        resultadoDiv.innerHTML += `<strong>Chave bruta (apenas bases coincidentes): ${chave}</strong><br>`;
+
+        if (temEva) {
+
+            // Simula detecção de espionagem: se Bob usa bases diferentes, há chance de inconsistência
+
+            let inconsistente = false;
+
+            for (let i = 0; i < numBits; i++) {
+
+                if (basesAlice[i] !== basesBob[i]) {
+
+                    // Eva pode ter causado erro; considera que um bit foi alterado
+
+                    inconsistente = true;
+
+                    break;
+
+                }
+
+            }
+
+            if (inconsistente) {
+
+                resultadoDiv.innerHTML += `<span style="color:red;">⚠️ ALERTA: Possível interceptação detectada! A presença de Eva causou inconsistências. A chave não é segura.</span><br>`;
+            <div style="margin-top:0.5rem;"><strong>Taxa de Erro Quântico (QBER):</strong> <span id="qberValor" style="font-weight:bold;">calculando...</span></div>
+            <div style="background:#ddd; border-radius:10px; height:12px; width:100%; margin:0.5rem 0;"><div id="qberBar" style="background:#f44336; width:0%; height:100%; border-radius:10px;"></div></div>
+
+            } else {
+
+                resultadoDiv.innerHTML += `<span style="color:orange;">❓ Nenhuma anomalia detectada, mas a interceptação pode ter ocorrido sem alterar bits (improvável).</span><br>`;
+
+            }
+
+        } else {
+
+            resultadoDiv.innerHTML += `<span style="color:green;">✅ Chave estabelecida com segurança! Não há evidência de espionagem.</span><br>`;
+
+        }
+
+        resultadoDiv.innerHTML += `<em>Na prática, Alice e Bob comparariam um subconjunto das bases para estimar a taxa de erro quântico (QBER). Se QBER > limite, abortam.</em>`;
+
+    };
+
+}
+
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+// ================== SIMULAÇÃO BB84 ==================
+
+const bb84SimularBtn = document.getElementById("bb84SimularBtn");
+
+if (bb84SimularBtn) {
+
+    bb84SimularBtn.onclick = () => {
+
+        const numBits = parseInt(document.getElementById("bb84Bits").value);
+
+        const temEva = document.getElementById("bb84Eva").checked;
+
+        const resultadoDiv = document.getElementById("bb84Resultado");
+
+        resultadoDiv.innerHTML = "<strong>🔐 Iniciando protocolo BB84...</strong><br>";
+
+        // Simula bases de Alice e Bob (0 = +, 1 = ×)
+
+        const basesAlice = [];
+
+        const bitsAlice = [];
+
+        for (let i = 0; i < numBits; i++) {
+
+            basesAlice.push(Math.random() < 0.5 ? 0 : 1);
+
+            bitsAlice.push(Math.random() < 0.5 ? 0 : 1);
+
+        }
+
+        let basesBob = [];
+
+        if (temEva) {
+
+            // Eva escolhe bases aleatoriamente e pode medir (simples)
+
+            basesBob = basesAlice.map(() => Math.random() < 0.5 ? 0 : 1);
+
+        } else {
+
+            basesBob = [...basesAlice]; // canal honesto, Bob usa mesmas bases
+
+        }
+
+        // Detectar bases iguais
+
+        let indicesIguais = [];
+
+        let chave = "";
+
+        for (let i = 0; i < numBits; i++) {
+
+            if (basesAlice[i] === basesBob[i]) {
+
+                indicesIguais.push(i);
+
+                chave += bitsAlice[i];
+
+            }
+
+        }
+
+        resultadoDiv.innerHTML += `Bits enviados: ${bitsAlice.join("")}<br>`;
+
+        resultadoDiv.innerHTML += `Bases de Alice: ${basesAlice.map(b => b === 0 ? "+" : "×").join("")}<br>`;
+
+        resultadoDiv.innerHTML += `Bases de Bob:   ${basesBob.map(b => b === 0 ? "+" : "×").join("")}<br>`;
+
+        resultadoDiv.innerHTML += `Índices com mesma base: ${indicesIguais.join(", ")}<br>`;
+
+        resultadoDiv.innerHTML += `<strong>Chave bruta (apenas bases coincidentes): ${chave}</strong><br>`;
+
+        if (temEva) {
+
+            // Simula detecção de espionagem: se Bob usa bases diferentes, há chance de inconsistência
+
+            let inconsistente = false;
+
+            for (let i = 0; i < numBits; i++) {
+
+                if (basesAlice[i] !== basesBob[i]) {
+
+                    // Eva pode ter causado erro; considera que um bit foi alterado
+
+                    inconsistente = true;
+
+                    break;
+
+                }
+
+            }
+
+            if (inconsistente) {
+
+                resultadoDiv.innerHTML += `<span style="color:red;">⚠️ ALERTA: Possível interceptação detectada! A presença de Eva causou inconsistências. A chave não é segura.</span><br>`;
+            <div style="margin-top:0.5rem;"><strong>Taxa de Erro Quântico (QBER):</strong> <span id="qberValor" style="font-weight:bold;">calculando...</span></div>
+            <div style="background:#ddd; border-radius:10px; height:12px; width:100%; margin:0.5rem 0;"><div id="qberBar" style="background:#f44336; width:0%; height:100%; border-radius:10px;"></div></div>
+
+            } else {
+
+                resultadoDiv.innerHTML += `<span style="color:orange;">❓ Nenhuma anomalia detectada, mas a interceptação pode ter ocorrido sem alterar bits (improvável).</span><br>`;
+
+            }
+
+        } else {
+
+            resultadoDiv.innerHTML += `<span style="color:green;">✅ Chave estabelecida com segurança! Não há evidência de espionagem.</span><br>`;
+
+        }
+
+        resultadoDiv.innerHTML += `<em>Na prática, Alice e Bob comparariam um subconjunto das bases para estimar a taxa de erro quântico (QBER). Se QBER > limite, abortam.</em>`;
+
+    };
+
+}
+
 <script src="script.js"></script>
 </body>
 </html>

@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2026 Antonio J.B. Silva
+ * SPDX-License-Identifier: GPL-3.0-only
+ */
+
 // ========== CONTADORES LOCAIS ==========
 let visitas = localStorage.getItem('visitas_irq');
 if (visitas === null) visitas = 0;
