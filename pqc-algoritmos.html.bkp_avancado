@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Algoritmos Pós‑Quânticos do NIST</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { background: #0a0f1c; color: #e0e0e0; font-family: system-ui; padding: 2rem; }
+        .container { max-width: 900px; margin: 0 auto; background: #0f172a; padding: 2rem; border-radius: 1rem; }
+        h1, h2 { color: #4caf50; }
+        .simulador { background: #1e2a3a; padding: 1rem; border-radius: 0.5rem; margin: 1.5rem 0; }
+        button, .botoes-algoritmos button { background: #2a3a4a; color: white; border: none; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; margin: 0.2rem; }
+        button:hover, .botoes-algoritmos button:hover { background: #4caf50; }
+        .resposta, .detalhe { margin-top: 1rem; background: #1e2a3a; padding: 0.8rem; border-radius: 0.5rem; }
+        a { color: #4caf50; }
+        select { padding: 0.3rem; border-radius: 0.3rem; background: #2a3a4a; color: white; border: none; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🔐 Algoritmos Pós‑Quânticos do NIST</h1>
+    <p>Os <strong>4 pilares da nova criptografia</strong> que substituirão RSA e ECDSA:</p>
+    <ul>
+        <li><strong>ML-KEM</strong> (CRYSTALS-Kyber) – encapsulamento de chaves</li>
+        <li><strong>ML-DSA</strong> (CRYSTALS-Dilithium) – assinaturas digitais</li>
+        <li><strong>FN-DSA</strong> (FALCON) – assinaturas baseadas em redes</li>
+        <li><strong>SLH-DSA</strong> (SPHINCS+) – assinaturas baseadas em hash</li>
+    </ul>
+
+    <h2>📌 O que são NIST, PQC, Lattice/Hash?</h2>
+    <p><strong>NIST</strong> – Instituto Nacional de Padrões e Tecnologia (EUA), responsável por padronizar os algoritmos pós-quânticos.</p>
+    <p><strong>PQC</strong> – Criptografia Pós-Quântica, que resiste a ataques de computadores quânticos.</p>
+    <p><strong>Lattice/Hash</strong> – Tipos de estruturas matemáticas usadas nos algoritmos (redes euclidianas e funções hash).</p>
+
+    <!-- SIMULAÇÃO EXISTENTE -->
+    <div class="simulador">
+        <h3>⚡ Simulação: Força da chave pós-quântica vs RSA</h3>
+        <p>Selecione um algoritmo:</p>
+        <select id="algoritmo">
+            <option value="rsa">RSA 2048 bits</option>
+            <option value="mlkem">ML-KEM (Kyber) 512</option>
+            <option value="mldsa">ML-DSA (Dilithium) 2</option>
+        </select>
+        <button id="simularBtn">Simular resistência quântica</button>
+        <div id="resultadoSim" class="resposta"></div>
+    </div>
+
+    <!-- NOVA SEÇÃO INTERATIVA: COMPARADOR DE ALGORITMOS -->
+    <h2>🔍 Compare os algoritmos personalizados</h2>
+    <div class="botoes-algoritmos">
+        <button onclick="mostrarDetalhe('ML-KEM')">ML-KEM</button>
+        <button onclick="mostrarDetalhe('ML-DSA')">ML-DSA</button>
+        <button onclick="mostrarDetalhe('FN-DSA')">FN-DSA</button>
+        <button onclick="mostrarDetalhe('SLH-DSA')">SLH-DSA</button>
+    </div>
+    <div id="detalhe-algoritmo" class="detalhe"></div>
+
+    <a href="index.html" class="btn-projeto">← Voltar para a página principal</a>
+</div>
+
+<script>
+    // Simulação existente
+    document.getElementById('simularBtn').addEventListener('click', function() {
+        let algo = document.getElementById('algoritmo').value;
+        let saida = '';
+        if (algo === 'rsa') {
+            saida = '🔴 RSA 2048: quebrado em <strong>minutos</strong> por um computador quântico (algoritmo de Shor). Vulnerável!';
+        } else if (algo === 'mlkem') {
+            saida = '🟢 ML-KEM (Kyber): resistente a ataques quânticos. Nível de segurança equivalente a AES-256.';
+        } else {
+            saida = '🟢 ML-DSA (Dilithium): assinatura digital pós-quântica. Seguro contra quânticos.';
+        }
+        document.getElementById('resultadoSim').innerHTML = saida;
+    });
+
+    // Novo script para os botões personalizados
+    const detalhes = {
+        'ML-KEM': '🔑 Encapsulamento de chaves baseado em redes (Kyber). Chave pública ≈ 800 bytes. Seguro para TLS.',
+        'ML-DSA': '✍️ Assinatura digital baseada em redes (Dilithium). Chave pública ≈ 1.3 KB. Resistente a quânticos.',
+        'FN-DSA': '⚡ Assinatura compacta baseada em redes (FALCON). Menor tamanho, ideal para IoT.',
+        'SLH-DSA': '🔐 Assinatura baseada em hash (SPHINCS+). Segurança bem compreendida, mas assinaturas maiores.'
+    };
+    function mostrarDetalhe(algo) {
+        document.getElementById('detalhe-algoritmo').innerHTML = `<p>${detalhes[algo]}</p>`;
+    }
+</script>
+</body>
+</html>
