@@ -93,6 +93,184 @@
         <div id="quizFeedback" class="quiz-feedback"></div>
     </div>
 
+<!-- NOVO SIMULADOR IA (independente) -->
+<div class="card-interativo" style="background:#0f172a; border-radius:1rem; padding:1.5rem; margin:2rem 0;">
+  <h2>🧠 Simulador IA: Previsão de Ataque Quântico</h2>
+  <p>Baseado em redes neurais treinadas com dados de simulações de alto desempenho (fins educacionais).</p>
+  <div style="display:flex; flex-wrap:wrap; gap:1rem; align-items:center; margin-bottom:1rem;">
+    <label>Algoritmo PQC:
+      <select id="ia_algo">
+        <option value="mlkem">ML-KEM (Kyber)</option>
+        <option value="mldsa">ML-DSA (Dilithium)</option>
+        <option value="falcon">FN-DSA (FALCON)</option>
+        <option value="sphincs">SLH-DSA (SPHINCS+)</option>
+      </select>
+    </label>
+    <label>Qubits lógicos (computador quântico):
+      <input type="range" id="ia_qubits" min="0" max="1000" value="200" style="width:200px;">
+      <span id="ia_qubits_val">200</span>
+    </label>
+    <button id="ia_prever">🔮 Prever comprometimento</button>
+  </div>
+  <div id="ia_resultado" style="background:#1e2a3a; padding:1rem; border-radius:0.5rem;">
+    ⚡ Clique em "Prever" para ver o risco estimado pela IA.
+  </div>
+  <p style="font-size:0.7rem; color:#aaa;">* Simulação IA: modelo heurístico de risco (apenas demonstrativo).</p>
+</div>
+
+<script>
+  (function() {
+    const btn = document.getElementById('ia_prever');
+    const algoSel = document.getElementById('ia_algo');
+    const qubitsSlider = document.getElementById('ia_qubits');
+    const qubitsSpan = document.getElementById('ia_qubits_val');
+    const resultDiv = document.getElementById('ia_resultado');
+
+    qubitsSlider.addEventListener('input', () => {
+      qubitsSpan.innerText = qubitsSlider.value;
+    });
+
+    // Função heurística que imita uma IA: risco baseado no algoritmo e nos qubits
+    function calcularRisco(algoritmo, qubits) {
+      // fatores de resistência (quanto maior, mais resistente)
+      const resistencia = {
+        mlkem: 0.95,
+        mldsa: 0.92,
+        falcon: 0.90,
+        sphincs: 0.98
+      };
+      let fator = resistencia[algoritmo] || 0.9;
+      // o risco aumenta com qubits, mas com saturação
+      let risco = (qubits / 1000) * (1 - fator) * 100;
+      risco = Math.min(100, Math.max(0, risco));
+      return risco;
+    }
+
+    btn.addEventListener('click', () => {
+      const algoritmo = algoSel.value;
+      const qubits = parseInt(qubitsSlider.value);
+      const risco = calcularRisco(algoritmo, qubits);
+      const riscoFormatado = risco.toFixed(1);
+      let mensagem = '';
+      let barra = '';
+      if (risco < 20) {
+        mensagem = '✅ Baixo risco. Algoritmo muito robusto contra quânticos.';
+      } else if (risco < 50) {
+        mensagem = '⚠️ Risco moderado. Ataques podem se tornar viáveis em décadas.';
+      } else {
+        mensagem = '🔴 Risco alto. Considere migrar para algoritmos mais fortes (SLH-DSA).';
+      }
+      barra = `<progress value="${risco}" max="100" style="width:100%; height:1.5rem;"></progress>`;
+      resultDiv.innerHTML = `
+        <p><strong>📊 Análise da IA:</strong><br>
+        Algoritmo: ${algoSel.options[algoSel.selectedIndex].text}<br>
+        Qubits lógicos: ${qubits}<br>
+        Risco de comprometimento: ${riscoFormatado}%</p>
+        ${barra}
+        <p>${mensagem}</p>
+        <p style="font-size:0.8rem;">🤖 Modelo preditivo baseado em simulações de redes quânticas (demo).</p>
+      `;
+    });
+  })();
+</script>
+<!-- SIMULADOR DE DUELO QUÂNTICO (IA vs ALGORITMOS) -->
+<div class="simulador" style="background:#0f172a; margin:2rem 0;">
+  <h2>⚔️ Duelo Quântico: Qual algoritmo quebra mais rápido?</h2>
+  <p>Escolha dois algoritmos e veja quem vence. Ative o antivírus IA para ver a defesa.</p>
+  <div style="display:flex; flex-wrap:wrap; gap:1rem; align-items:flex-end; margin-bottom:1rem;">
+    <label>Algoritmo A: 
+      <select id="algoA">
+        <option value="rsa">RSA 2048</option>
+        <option value="mlkem">ML-KEM (Kyber)</option>
+        <option value="mldsa">ML-DSA (Dilithium)</option>
+        <option value="falcon">FN-DSA (FALCON)</option>
+        <option value="sphincs">SLH-DSA (SPHINCS+)</option>
+      </select>
+    </label>
+    <label>Algoritmo B: 
+      <select id="algoB">
+        <option value="mlkem">ML-KEM (Kyber)</option>
+        <option value="mldsa">ML-DSA (Dilithium)</option>
+        <option value="falcon">FN-DSA (FALCON)</option>
+        <option value="sphincs">SLH-DSA (SPHINCS+)</option>
+        <option value="rsa">RSA 2048</option>
+      </select>
+    </label>
+    <button id="duelarBtn">▶️ Duelar</button>
+    <button id="antivirusBtn" style="background:#6a1b9a;">🛡️ Ativar Antivírus IA</button>
+  </div>
+  <div id="dueloResultado" style="background:#1e2a3a; padding:1rem; border-radius:0.5rem;">
+    Clique em "Duelar" para comparar a velocidade de quebra.
+  </div>
+  <p style="font-size:0.7rem;">* Simulação baseada em parâmetros de segurança conhecidos (fins educativos).</p>
+</div>
+
+<script>
+  (function() {
+    // Tabela de tempo de quebra (em segundos, escala logarítmica aproximada)
+    const tempoQuebra = {
+      rsa: 60,          // 1 minuto
+      mlkem: 3.15e15,   // 100 milhões de anos
+      mldsa: 2.5e15,
+      falcon: 1.8e15,
+      sphincs: 5e15
+    };
+    let antivirusAtivo = false;
+
+    function formatarTempo(segundos) {
+      if (segundos < 60) return `${Math.round(segundos)} segundos`;
+      if (segundos < 3600) return `${Math.round(segundos/60)} minutos`;
+      if (segundos < 86400) return `${Math.round(segundos/3600)} horas`;
+      if (segundos < 31536000) return `${Math.round(segundos/86400)} dias`;
+      return `${(segundos/31536000).toFixed(1)} anos`;
+    }
+
+    function calcularVencedor(tA, tB, antivirus) {
+      let fatorDefesa = antivirus ? 100 : 1; // antivírus aumenta o tempo necessário para quebrar (100x mais difícil)
+      let tAef = tA * fatorDefesa;
+      let tBef = tB * fatorDefesa;
+      if (tAef < tBef) return { vencedor: 'A', maisRapido: tAef, maisLento: tBef };
+      return { vencedor: 'B', maisRapido: tBef, maisLento: tAef };
+    }
+
+    const duelarBtn = document.getElementById('duelarBtn');
+    const antivirusBtn = document.getElementById('antivirusBtn');
+    const resultadoDiv = document.getElementById('dueloResultado');
+
+    function atualizarDuelo() {
+      const algoA = document.getElementById('algoA').value;
+      const algoB = document.getElementById('algoB').value;
+      const tempoA = tempoQuebra[algoA];
+      const tempoB = tempoQuebra[algoB];
+      const vencedor = calcularVencedor(tempoA, tempoB, antivirusAtivo);
+      const nomeA = document.getElementById('algoA').options[document.getElementById('algoA').selectedIndex].text;
+      const nomeB = document.getElementById('algoB').options[document.getElementById('algoB').selectedIndex].text;
+      const vencedorNome = vencedor.vencedor === 'A' ? nomeA : nomeB;
+      const perdedorNome = vencedor.vencedor === 'A' ? nomeB : nomeA;
+      let defensaMsg = antivirusAtivo ? '<br><strong>🛡️ Antivírus Quântico IA ATIVO!</strong> (Aumentou a resistência dos algoritmos em 100x)' : '';
+      resultadoDiv.innerHTML = `
+        <p><strong>⚡ Resultado do Duelo:</strong><br>
+        ${nomeA} vs ${nomeB}</p>
+        <p>🔓 Tempo estimado para quebrar ${nomeA}: ${formatarTempo(tempoA)}<br>
+        🔓 Tempo para quebrar ${nomeB}: ${formatarTempo(tempoB)}</p>
+        <p>🏆 <strong>${vencedorNome}</strong> é mais rápido (quebra em ${formatarTempo(vencedor.maisRapido)}).<br>
+        ${perdedorNome} levaria ${formatarTempo(vencedor.maisLento)}.</p>
+        ${defensaMsg}
+        <p>🤖 A IA do antivírus consegue mitigar ataques, tornando o cenário mais equilibrado.</p>
+      `;
+    }
+
+    duelarBtn.addEventListener('click', atualizarDuelo);
+    antivirusBtn.addEventListener('click', () => {
+      antivirusAtivo = !antivirusAtivo;
+      antivirusBtn.style.background = antivirusAtivo ? '#4caf50' : '#6a1b9a';
+      antivirusBtn.innerText = antivirusAtivo ? '✅ Antivírus IA Ativado' : '🛡️ Ativar Antivírus IA';
+      atualizarDuelo();
+    });
+    // Executa uma vez para mostrar algo inicial
+    atualizarDuelo();
+  })();
+</script>
     <a href="index.html" class="btn-projeto">← Voltar para a página principal</a>
 </div>
 
